@@ -6520,8 +6520,13 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   const ERAS = [["", "Todas as eras"], ["trevas", "Era I"], ["feudal", "Era II"], ["castelos", "Era III"], ["imperial", "Era IV"]];
   const QTDS = [[10, "10"], [20, "20"], [0, "Todas"]];
   const ORDENS = [["aleatoria", "🎲 Aleatória"], ["era", "📜 Na ordem das eras"], ["fracas", "🎯 As que mais erro"]];
+  // edifícios: cada carta vai para o prédio onde é treinada ou pesquisada (eras no Centro da Cidade; a carta do prédio fica com ele)
+  const PREDIOS = [["b109", "🏛️"], ["b12", "⚔️"], ["b87", "🏹"], ["b101", "🐎"], ["b49", "🛞"], ["b82", "🏰"], ["b45", "⚓"], ["b103", "🔨"], ["b209", "🎓"], ["b104", "⛪"], ["b84", "⚖️"], ["b68", "🌾"], ["b562", "🪵"], ["b584", "⛏️"]];
+  const PRED_IDS = PREDIOS.map(([id]) => id);
+  const grupoDe = (c) => (c.tipo === "e" ? "b109" : PRED_IDS.includes(c.pr) ? c.pr : "outras");
+  const nomePredio = (id) => { const b = (window.GAME.predios || []).find((x) => x.id === id); return b ? b.nome : id; };
   const CHAVE = "aoe2quiz.forja.v1";
-  let dados = { cfg: { tipo: "", era: "", qtd: 10, ordem: "aleatoria" }, itens: {}, sessoes: [] };
+  let dados = { cfg: { tipo: "", era: "", predio: "", qtd: 10, ordem: "aleatoria" }, itens: {}, sessoes: [] };
   try { const x = JSON.parse(localStorage.getItem(CHAVE)); if (x && x.itens) dados = { ...dados, ...x, cfg: { ...dados.cfg, ...(x.cfg || {}) } }; } catch (e) {}
   const salvar = () => { try { localStorage.setItem(CHAVE, JSON.stringify(dados)); } catch (e) {} };
 
@@ -6535,7 +6540,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   }
   const chaveDe = (x) => x.col.tipo + ":" + x.col.id;
   const errosDe = (k) => { const it = dados.itens[k]; return it ? (it.e || 0) + (it.c || 0) * 0.5 - (it.a || 0) * 0.6 : 0; };
-  function filtradas(cfg) { return todas().filter((x) => (!cfg.tipo || x.col.tipo === cfg.tipo) && (!cfg.era || x.col.era === cfg.era)); }
+  function filtradas(cfg, sem) { return todas().filter((x) => (sem === "tipo" || !cfg.tipo || x.col.tipo === cfg.tipo) && (!cfg.era || x.col.era === cfg.era) && (sem === "predio" || !cfg.predio || grupoDe(x.col) === cfg.predio)); }
   function montarBaralho(cfg, so) {
     let l = so ? todas().filter((x) => so.includes(chaveDe(x))) : filtradas(cfg);
     const emb = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -6555,6 +6560,11 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
       <p class="muted">Cada carta aparece sem os números. Diga o <b>custo</b> e os <b>atributos</b> impressos nela (tropas: PV, ataque e armaduras; construções: PV; tecnologias e eras: tempo). Os valores são os do jogo base, sem tecnologias.</p>
       <h3>Tipo</h3><div class="chips">${chips(TIPOS, "tipo")}</div>
       <h3>Era</h3><div class="chips">${chips(ERAS, "era")}</div>
+      <h3>Edifício</h3><p class="muted pequeno">Estude um prédio de cada vez: as tropas que ele treina, as tecnologias que ele pesquisa e a carta do próprio prédio.</p>
+      <div class="chips">${(() => { const base = filtradas(cfg, "predio"), q = (g) => base.filter((x) => grupoDe(x.col) === g).length;
+        return [["", "Todos"], ...PREDIOS.map(([id, ic]) => [id, `${ic} ${esc(nomePredio(id))}`]), ["outras", "🧱 Outras construções"]]
+          .filter(([v]) => !v || q(v) || cfg.predio === v)
+          .map(([v, t]) => `<button class="chip ${cfg.predio === v ? "on" : ""}" data-fq-predio="${v}">${t}${v ? ` <small class="muted" style="display:inline">· ${q(v)}</small>` : ""}</button>`).join(""); })()}</div>
       <h3>Ordem</h3><div class="chips">${chips(ORDENS, "ordem")}</div>
       <h3>Quantas cartas</h3><div class="chips">${QTDS.map(([v, t]) => `<button class="chip ${cfg.qtd === v ? "on" : ""}" data-fq-qtd="${v}">${t}</button>`).join("")}</div>
       <p class="muted pequeno">${n} carta${n === 1 ? "" : "s"} com esse filtro${cfg.qtd && cfg.qtd < n ? ` · você vai forjar ${cfg.qtd}` : ""}.</p>
@@ -6566,6 +6576,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     const cfg = dados.cfg;
     if (b.dataset.fqTipo !== undefined) cfg.tipo = b.dataset.fqTipo;
     else if (b.dataset.fqEra !== undefined) cfg.era = b.dataset.fqEra;
+    else if (b.dataset.fqPredio !== undefined) cfg.predio = b.dataset.fqPredio;
     else if (b.dataset.fqOrdem !== undefined) cfg.ordem = b.dataset.fqOrdem;
     else if (b.dataset.fqQtd !== undefined) cfg.qtd = Number(b.dataset.fqQtd);
     else if (b.id === "fq-comecar") return comecar();
