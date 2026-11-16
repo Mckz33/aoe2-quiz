@@ -3,8 +3,8 @@
  * Ícones e manifesto: cópia guardada primeiro.
  * Fontes do Google e JSZip (cdnjs): usa a cópia guardada e atualiza em segundo plano.
  * Ao publicar uma versão nova, troque o número em VERSAO para limpar as cópias antigas. */
-const VERSAO = "aoe2quiz-v28.2";
-const ARQUIVOS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png", "./favicon-32.png"];
+const VERSAO = "aoe2quiz-v28.3";
+const ARQUIVOS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png", "./favicon-32.png", "./jszip.min.js"];
 const EXTERNOS = ["fonts.googleapis.com", "fonts.gstatic.com", "cdnjs.cloudflare.com"];
 
 self.addEventListener("install", (e) => {
@@ -25,6 +25,8 @@ self.addEventListener("fetch", (e) => {
     );
     return;
   }
+  // pacote de ícones (grande): vai direto à rede, o app o guarda no IndexedDB
+  if (url.origin === location.origin && /\.zip$/.test(url.pathname)) return;
   // arquivos do próprio app: cópia guardada primeiro
   if (url.origin === location.origin) {
     e.respondWith(caches.match(req).then((r) => r || fetch(req).then((resp) => { if (resp.ok) { const cp = resp.clone(); caches.open(VERSAO).then((c) => c.put(req, cp)); } return resp; })));

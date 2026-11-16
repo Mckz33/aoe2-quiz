@@ -3789,7 +3789,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     if (IMG[chave]) URL.revokeObjectURL(IMG[chave]);
     delete IMG[chave]; avisar();
   }
-  async function removerTodas() { try { await dbOp("readwrite", (st) => st.clear()); } catch (e) { /* nada */ } Object.keys(IMG).forEach((k) => { URL.revokeObjectURL(IMG[k]); delete IMG[k]; }); avisar(); }
+  async function removerTodas() { lsSet("aoe2-pacote-removido", "1"); try { await dbOp("readwrite", (st) => st.clear()); } catch (e) { /* nada */ } Object.keys(IMG).forEach((k) => { URL.revokeObjectURL(IMG[k]); delete IMG[k]; }); avisar(); }
   // descobre a carta pelo caminho do arquivo: pasta objects/ ou technologies/ + número do jogo, ou o nome da carta
   const norm = (x) => x.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "");
   let NOMES = null;
@@ -3834,7 +3834,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   }
   function carregarJSZip() {
     if (window.JSZip) return Promise.resolve(window.JSZip);
-    return new Promise((ok, erro) => { const sc = document.createElement("script"); sc.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"; sc.onload = () => ok(window.JSZip); sc.onerror = () => erro(new Error("Não deu para abrir o .zip agora (sem internet?). Descompacte e escolha a pasta.")); document.head.appendChild(sc); });
+    return new Promise((ok, erro) => { const sc = document.createElement("script"); sc.src = "./jszip.min.js"; sc.onload = () => ok(window.JSZip); sc.onerror = () => { const s2 = document.createElement("script"); s2.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"; s2.onload = () => ok(window.JSZip); s2.onerror = () => erro(new Error("Não deu para abrir o .zip agora.")); document.head.appendChild(s2); }; document.head.appendChild(sc); });
   }
   async function importarZip(f, progresso) {
     const JSZip = await carregarJSZip();
@@ -3851,7 +3851,22 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     }
     return { ok, ignorados };
   }
-  carregarImagens();
+  // pacote de ícones embutido: instalado sozinho na primeira abertura (e de novo se o navegador apagar os dados)
+  const PACOTE = { arq: "./aoe2-icon-resources-master.zip", versao: "pacote-v1" };
+  const lsGet = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* nada */ } };
+  async function instalarPacote() {
+    if (window.CARTAS_PACOTE_OK) return;
+    const feito = lsGet("aoe2-pacote") === PACOTE.versao, removido = lsGet("aoe2-pacote-removido") === "1";
+    if (feito && (Object.keys(IMG).length || removido)) return;
+    try {
+      const r = await fetch(PACOTE.arq); if (!r.ok) throw new Error("pacote indisponível");
+      await importarZip(await r.blob());
+      lsSet("aoe2-pacote", PACOTE.versao); lsSet("aoe2-pacote-removido", "0");
+      avisar();
+    } catch (e) { /* sem internet: tenta de novo na próxima abertura */ }
+  }
+  carregarImagens().then(instalarPacote);
   window.CARTAS = { todas, carta, achar, ERA_NOME, mini, IMG, importar, salvarImagem, removerImagem, removerTodas, chavesDoArquivo, imgDe, qtdImagens: () => Object.keys(IMG).length };
 })();
 
