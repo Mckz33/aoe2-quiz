@@ -1,0 +1,27 @@
+{
+  "id": "./",
+  "name": "AoE2 Quiz",
+  "short_name": "AoE2 Quiz",
+  "description": "Aprenda Age of Empires II: Definitive Edition de verdade: custos, atributos, tempos, counters e economia. Quiz, quiz de cartas, duelo de cartas e coleção.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#15110d",
+  "theme_color": "#1a1410",
+  "categories": ["education", "games"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Quiz", "url": "./#config", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Quiz de cartas", "url": "./#fq-config", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Duelo de cartas", "url": "./#duelo-config", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Coleção de cartas", "url": "./#cartas", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ]
+}
