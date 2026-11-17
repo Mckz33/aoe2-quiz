@@ -586,6 +586,53 @@ button.du-fora.ia { color: var(--muted); }
 .menu-modo .mm-tx { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .menu-modo b { font-size: 1.05rem; }
 .menu-modo small { color: var(--muted); font-size: .8rem; }
+/* meu progresso de todos os modos */
+.pg-modo { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin: 12px 0; }
+.pg-modo h3 { margin: 0 0 8px; font-size: 1.02rem; }
+.pg-modo-topo { display: flex; justify-content: space-between; align-items: baseline; }
+.pg-modo .cards-resumo { margin-bottom: 8px; }
+.pg-modo > .btn { width: 100%; margin-top: 8px; }
+.pg-barra { position: relative; height: 22px; background: var(--panel-2); border-radius: 6px; overflow: hidden; margin: 4px 0; }
+.pg-barra i { position: absolute; inset: 0 auto 0 0; background: var(--accent-soft); }
+.pg-barra span { position: relative; display: block; font-size: .78rem; line-height: 22px; padding: 0 8px; white-space: nowrap; }
+.pg-sub { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 10px; margin-top: 6px; }
+.pg-sub small { color: var(--muted); font-size: .75rem; }
+.pg-titulo { margin-top: 18px; }
+.pg-backup { border-color: var(--accent); }
+/* dicas para decorar */
+.dc-abas { margin-bottom: 4px; }
+.dc-topo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dc-grupo { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin: 12px 0; scroll-margin-top: 70px; }
+.dc-grupo.cruzado { border-style: dashed; }
+.dc-grupo.dc-pisca { animation: dcPisca 1.6s ease 2; }
+@keyframes dcPisca { 50% { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); } }
+.dc-g-topo { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.dc-g-topo h3 { margin: 0; font-size: 1.02rem; }
+.dc-prog { font-size: .85rem; white-space: nowrap; color: var(--muted); }
+.dc-gancho { margin: 8px 0 10px; font-size: .92rem; line-height: 1.45; background: var(--panel-2); border-left: 3px solid var(--accent); padding: 8px 10px; border-radius: 6px; }
+.dc-linhas { display: flex; flex-direction: column; gap: 6px; }
+.dc-linha { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; padding: 6px 0; border-top: 1px solid var(--border); }
+.dc-linha:first-child { border-top: 0; }
+.dc-nome { background: none; border: 0; color: var(--text); font: inherit; font-weight: 600; padding: 0; text-align: left; cursor: pointer; flex: 1 1 140px; display: flex; align-items: center; gap: 6px; }
+.dc-st { width: 9px; height: 9px; border-radius: 50%; background: var(--border); flex: none; }
+.dc-st.ok { background: var(--ok); } .dc-st.erro { background: #e0b03a; }
+.dc-pils { display: flex; flex-wrap: wrap; gap: 4px; }
+.dc-pil { font: inherit; font-size: .86rem; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 3px 7px; white-space: nowrap; cursor: default; }
+.dc-pil.oculta { color: var(--accent); border-style: dashed; cursor: pointer; min-width: 44px; }
+.dc-acoes { display: flex; gap: 8px; margin-top: 10px; } .dc-acoes .btn { flex: 1; padding: 9px 6px; font-size: .9rem; }
+.dc-comp { display: flex; flex-direction: column; gap: 10px; margin: 10px 0; }
+.dc-comp-l { border-top: 1px solid var(--border); padding-top: 8px; }
+.dc-comp-n { display: block; margin-bottom: 6px; }
+.dc-comp-cs { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 6px; }
+.dc-in { display: flex; flex-direction: column; gap: 2px; font-size: .75rem; color: var(--muted); }
+.dc-in input { width: 100%; box-sizing: border-box; font: inherit; font-size: 1rem; padding: 7px 6px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); text-align: center; }
+.dc-in.certo input { border-color: var(--ok); background: rgba(95,174,90,.15); }
+.dc-in.errado input { border-color: var(--bad); background: rgba(212,85,63,.15); }
+.dc-in em { font-style: normal; color: var(--ok); font-weight: 700; text-align: center; font-size: .85rem; }
+.dc-perg { font-size: 1.05rem; line-height: 1.5; }
+.dc-seq { display: block; margin-top: 8px; font-size: .95rem; color: var(--muted); } .dc-seq b { color: var(--text); }
+.fq-dica { background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 8px 10px; font-size: .9rem; }
+.fq-dica p { margin: 4px 0; line-height: 1.4; }
 /* quiz de cartas */
 .fq-tela { display: flex; flex-direction: column; gap: 8px; max-width: 520px; margin: 0 auto; }
 .fq-topo { display: flex; justify-content: space-between; font-size: .85rem; }
@@ -620,10 +667,12 @@ button.du-fora.ia { color: var(--muted); }
         <button class="menu-modo" data-ir="config"><span class="mm-ic">❓</span><span class="mm-tx"><b>Quiz</b><small>perguntas de custos, atributos, tempos e counters</small></span></button>
         <button class="menu-modo" data-ir="fq-config"><span class="mm-ic">🔨</span><span class="mm-tx"><b>Quiz de cartas</b><small>forje as cartas para decorar os valores de cada uma</small></span></button>
         <button class="menu-modo" data-ir="duelo-config"><span class="mm-ic">🃏</span><span class="mm-tx"><b>Duelo de cartas</b><small>aprenda custos, tempos e counters jogando contra a IA</small></span></button>
+        <button class="menu-modo" data-ir="dicas"><span class="mm-ic">💡</span><span class="mm-tx"><b>Dicas para decorar</b><small>padrões dos números, escadas para completar e treino por grupo</small></span></button>
         <button class="menu-modo" data-ir="cartas"><span class="mm-ic">📚</span><span class="mm-tx"><b>Coleção de cartas</b><small>uma carta para cada tropa, prédio, tecnologia e era</small></span></button>
       </div>
       <button class="btn primario" id="btn-instalar" hidden>📲 Instalar o app</button>
-      <button class="btn" data-ir="progresso">Meu progresso</button>
+      <button class="btn" data-ir="progresso">📊 Meu progresso e backup</button>
+      <p class="muted pequeno centro" id="lembrete-backup" hidden></p>
       <button class="btn" id="btn-revisar">Revisar erros <span class="badge" id="badge-erros">0</span></button>
       <p class="rodape muted" id="versao"></p>
     </section>
@@ -677,6 +726,8 @@ button.du-fora.ia { color: var(--muted); }
 
     <!-- PROGRESSO -->
     <section id="tela-progresso" class="tela" hidden>
+      <div id="prog-modos"></div>
+      <h3 class="pg-titulo">❓ Quiz</h3>
       <div class="cards-resumo" id="resumo-prog"></div>
       <h3>Evolução (% de acerto por partida)</h3>
       <p class="muted pequeno">Pontos: cada partida · Linha forte: média das últimas 5</p>
@@ -684,7 +735,8 @@ button.du-fora.ia { color: var(--muted); }
       <h3>Desempenho por categoria</h3>
       <canvas class="grafico" id="graf-cats" style="height:260px"></canvas>
       <div id="sugestao"></div>
-      <button class="link perigo" id="btn-apagar">Apagar meu histórico</button>
+      <div id="prog-backup"></div>
+      <button class="link perigo" id="btn-apagar">Apagar todo o progresso</button>
     </section>
 
     <!-- BATALHA: configuração -->
@@ -792,6 +844,10 @@ button.du-fora.ia { color: var(--muted); }
     <section id="tela-fq-config" class="tela" hidden></section>
     <section id="tela-fq" class="tela fq-tela" hidden></section>
     <section id="tela-fq-fim" class="tela" hidden></section>
+
+    <!-- DICAS PARA DECORAR -->
+    <section id="tela-dicas" class="tela" hidden></section>
+    <section id="tela-dicas-padrao" class="tela fq-tela" hidden></section>
 
     <!-- PARTIDA COMPLETA: configuração -->
     <section id="tela-pc-config" class="tela" hidden>
@@ -1496,6 +1552,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     const n = Object.keys(ST.erros()).length;
     $("#badge-erros").textContent = n;
     $("#btn-revisar").disabled = n === 0;
+    if (window.PROGRESSO) window.PROGRESSO.lembrete();
     $("#versao").textContent = `Dados: AoE2 DE — ${QD.versao.replace(/^(\S+).*Update (\d+).*/, "atualização $2 ($1)")} · ${QD.todos().length} modelos de pergunta`;
   }
   $("#btn-revisar").onclick = () => iniciar({ cats: QD.CATEGORIAS.map((c) => c.id), eras: [...QD.ERA_ORDER], qtd: Math.min(PADRAO, Object.keys(ST.erros()).length), feedback: true, revisao: true });
@@ -1617,10 +1674,16 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     });
     const fraca = itens.filter((i) => i.n >= 5).sort((a, b) => a.pct - b.pct)[0];
     $("#sugestao").innerHTML = fraca ? `<div class="sugestao">Seu ponto mais fraco é <b>${esc(fraca.nome)}</b> (${fraca.pct}%). Que tal uma partida só dessa categoria? <button class="btn primario" id="btn-treinar" style="width:100%;margin-top:8px">Treinar ${esc(fraca.nome)}</button></div>` : "";
+    if (window.PROGRESSO) window.PROGRESSO.render();
     const bt = $("#btn-treinar");
     if (bt) bt.onclick = () => { const id = QD.CATEGORIAS.find((c) => c.nome === fraca.nome).id; iniciar({ cats: [id], eras: [...QD.ERA_ORDER], qtd: PADRAO, feedback: true }); };
   }
-  $("#btn-apagar").onclick = async () => { if (await confirmar("Apagar todo o histórico, gráficos e erros salvos neste aparelho?", "Apagar", "Cancelar")) { ST.apagar(); renderProgresso(); } };
+  $("#btn-apagar").onclick = async () => {
+    if (!(await confirmar("Apagar o progresso de TODOS os modos (Quiz, Quiz de cartas, Dicas, Duelo, Coleção e partidas salvas) neste aparelho? Exporte um backup antes se quiser guardar.", "Apagar tudo", "Cancelar"))) return;
+    ST.apagar();
+    if (window.PROGRESSO) return window.PROGRESSO.apagarTudo();
+    renderProgresso();
+  };
   window.addEventListener("resize", () => { if (atual === "progresso") renderProgresso(); });
 
   // ---------- instalação (PWA) ----------
@@ -3910,6 +3973,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   function mostrar() {
     const c = lista[idx];
     $("#mc-modal-carta").innerHTML = C.carta(c.tipo, c.id, c.opts || {});
+    try { const k = "aoe2quiz.colecao.v1", s = JSON.parse(localStorage.getItem(k)) || {}; s.vistas = s.vistas || {}; s.vistas[c.tipo + ":" + c.id] = Date.now(); localStorage.setItem(k, JSON.stringify(s)); } catch (e) { /* sem armazenamento */ }
     $("#mc-ant").disabled = idx <= 0; $("#mc-prox").disabled = idx >= lista.length - 1;
     $("#mc-ant").hidden = $("#mc-prox").hidden = lista.length < 2;
     $("#mc-modal").hidden = false;
@@ -6539,6 +6603,8 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     });
   }
   const chaveDe = (x) => x.col.tipo + ":" + x.col.id;
+  // dominada = acertou da última vez (dados antigos, sem "u": acertou e nunca errou)
+  const dominada = (it) => !!it && (it.u !== undefined ? it.u === 1 : (it.a || 0) > 0 && !(it.e || 0) && !(it.c || 0));
   const errosDe = (k) => { const it = dados.itens[k]; return it ? (it.e || 0) + (it.c || 0) * 0.5 - (it.a || 0) * 0.6 : 0; };
   function filtradas(cfg, sem) { return todas().filter((x) => (sem === "tipo" || !cfg.tipo || x.col.tipo === cfg.tipo) && (!cfg.era || x.col.era === cfg.era) && (sem === "predio" || !cfg.predio || grupoDe(x.col) === cfg.predio)); }
   function montarBaralho(cfg, so) {
@@ -6555,7 +6621,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     const cfg = dados.cfg, n = filtradas(cfg).length;
     const chips = (lista, campo) => lista.map(([v, t]) => `<button class="chip ${cfg[campo] === v ? "on" : ""}" data-fq-${campo}="${v}">${t}</button>`).join("");
     const ult = dados.sessoes.slice(-1)[0];
-    const fortes = Object.values(dados.itens).filter((it) => (it.a || 0) > 0 && (it.e || 0) === 0).length;
+    const fortes = Object.values(dados.itens).filter(dominada).length;
     $("#tela-fq-config").innerHTML = `
       <p class="muted">Cada carta aparece sem os números. Diga o <b>custo</b> e os <b>atributos</b> impressos nela (tropas: PV, ataque e armaduras; construções: PV; tecnologias e eras: tempo). Os valores são os do jogo base, sem tecnologias.</p>
       <h3>Tipo</h3><div class="chips">${chips(TIPOS, "tipo")}</div>
@@ -6586,10 +6652,10 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
 
   // ---------- rodada ----------
   let S = null; // { baralho, i, v, sel, res, cola, acertos, erradas: [], colas }
-  function comecar(so) {
+  function comecar(so, origem) {
     const baralho = montarBaralho(dados.cfg, so);
     if (!baralho.length) return;
-    S = { baralho, i: 0, acertos: 0, colas: 0, erradas: [] };
+    S = { baralho, i: 0, acertos: 0, colas: 0, erradas: [], origem: origem || (S && so ? S.origem : null) };
     novaCarta();
     A.ir("fq");
   }
@@ -6624,6 +6690,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
             <p class="${res.cola ? "" : res.errados.length ? "bad-txt" : "ok-txt"} du-m-res">${res.cola ? "💡 Com cola: estude os números e siga." : res.errados.length ? `❌ ${res.errados.length} campo${res.errados.length > 1 ? "s" : ""} errado${res.errados.length > 1 ? "s" : ""}` : "✅ Forja perfeita!"}</p>
             ${teclado(S.campos, null, vals, marca)}
             ${lista ? `<ul class="du-erros">${lista}</ul>` : ""}
+            ${(() => { const dg = window.DICAS && window.DICAS.grupoDe(chaveDe(x)); return dg ? `<div class="fq-dica"><b>💡 ${esc(dg.titulo)}</b><p>${esc(dg.gancho)}</p><button class="link" data-fq-dica="${esc(dg.id)}">Ver a dica completa ▸</button></div>` : ""; })()}
             <button class="btn primario grande" id="fq-proxima">${ult ? "Ver resultado" : "Próxima carta ▶"}</button>
           </div>
         </div>`;
@@ -6636,11 +6703,12 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     const x = S.baralho[S.i], g = D.gabarito(x.d), k = chaveDe(x);
     const it = (dados.itens[k] = dados.itens[k] || { a: 0, e: 0, c: 0 });
     let errados = [];
-    if (cola) { it.c++; S.colas++; S.erradas.push(k); S.v = { ...g }; }
+    if (cola) { it.c++; it.u = 0; S.colas++; S.erradas.push(k); S.v = { ...g }; }
     else {
       errados = Object.keys(g).filter((f) => Math.round(valor(S.v[f])) !== Math.round(g[f]));
-      if (errados.length) { it.e++; S.erradas.push(k); } else { it.a++; S.acertos++; }
+      if (errados.length) { it.e++; it.u = 0; S.erradas.push(k); } else { it.a++; it.u = 1; S.acertos++; }
     }
+    it.d = Date.now();
     S.res = { errados, cola };
     salvar(); render();
   }
@@ -6668,6 +6736,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     if (b.id === "fq-cola") return forjar(true);
     if (b.id === "fq-forjar") return forjar(false);
     if (b.id === "fq-proxima") return proxima();
+    if (b.dataset.fqDica) return window.DICAS.abrir(b.dataset.fqDica);
   });
   // teclado físico: números, Backspace, - , Tab/Enter para o próximo campo; Enter no último forja; Enter no resultado segue
   document.addEventListener("keydown", (e) => {
@@ -6690,6 +6759,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
       <div class="fq-placar"><b>${S.acertos}</b> de ${n} forjadas sem erro <span class="muted">(${pct}%)</span>${S.colas ? `<br><small class="muted">💡 ${S.colas} com cola</small>` : ""}</div>
       ${unicas.length ? `<h3>Para treinar de novo (${unicas.length})</h3><div class="fq-erradas">${unicas.map((k) => { const x = porK[k]; return `<div class="fq-errada">${C.mini(x.col.tipo, x.col.id, { nome: x.col.nome, chave: "fe" + k })}</div>`; }).join("")}</div>
         <button class="btn primario grande" id="fq-treinar">🔁 Treinar só as erradas</button>` : `<p class="ok-txt">Nenhum erro. Tente outra era ou "Todas".</p>`}
+      ${S.origem === "dicas" ? `<button class="btn grande" data-ir="dicas">💡 Voltar às dicas</button>` : ""}
       <button class="btn grande" id="fq-denovo">🎲 Nova rodada</button>
       <button class="btn" data-ir="inicio">Início</button>`;
     S.ultimasErradas = unicas;
@@ -6700,12 +6770,504 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     if (b.id === "fq-denovo") return A.ir("fq-config");
   });
 
+  // API para as Dicas e o Meu progresso
+  window.FORJA = {
+    todas, chaveDe, comecar,
+    item: (k) => dados.itens[k],
+    registrar: (k, ok) => { const it = (dados.itens[k] = dados.itens[k] || { a: 0, e: 0, c: 0 }); if (ok) it.a++; else it.e++; it.u = ok ? 1 : 0; it.d = Date.now(); salvar(); },
+    dominada,
+    resumo: () => ({ total: todas().length, itens: dados.itens, sessoes: dados.sessoes, dominadas: todas().filter((x) => dominada(dados.itens[chaveDe(x)])).length }),
+  };
   A.registrarTela("fq-config", "Quiz de cartas", renderConfig);
   A.registrarTela("fq", "Quiz de cartas", render);
   A.registrarTela("fq-fim", "Quiz de cartas", renderFim);
   A.voltarPara("fq", "fq-config");
   A.voltarPara("fq-fim", "fq-config");
   A.guardarVoltar("fq", async () => !S || S.res || S.i === 0 || (await A.confirmar("Sair da rodada? O que você já forjou fica salvo.", "Sair", "Continuar")));
+})();
+</script>
+<script>
+/* Dicas para decorar: padrões dos números das cartas, interativos (esconder, completar, achar o padrão, treinar). */
+(function () {
+  const A = window.APP, C = window.CARTAS, D = window.DUELO, F = window.FORJA, esc = A.esc;
+  const $ = (s) => document.querySelector(s);
+  const IC = { c: "🍖", m: "🪵", o: "🪙", p: "🪨" }, RES = ["c", "m", "o", "p"];
+  const CHAVE = "aoe2quiz.dicas.v1";
+  let st = { ocultar: false, aba: "tropas", padrao: [], completar: [] };
+  try { const x = JSON.parse(localStorage.getItem(CHAVE)); if (x) st = { ...st, ...x }; } catch (e) {}
+  const salvar = () => { try { localStorage.setItem(CHAVE, JSON.stringify(st)); } catch (e) {} };
+
+  // ---------- os grupos ----------
+  // cartas: "U:nome" tropa · "T:nome" tecnologia · "B:nome" prédio · "E:feudal" era. esc = escada (em ordem); x = grupo cruzado (não é o grupo principal das cartas)
+  const LINHAS = [
+    ["Infantaria (espada)", "Espada: Milícia → Campeão", "Custo fixo em toda a linha: 50🍖 20🪙. PV 40 → 45 → 60 → 65 → 70 e ataque 4 → 6 → 9 → 12 → 14. Armadura 0/1 até o Homem de Armas; do Espadachim em diante, 1/1."],
+    ["Lanceiros", "Lanceiros", "35🍖 25🪵: o Escaramuçador com os números trocados (25🍖 35🪵). Armadura sempre 0/0. PV 45 → 55 → 60 e ataque 3 → 4 → 6."],
+    ["Arqueiros", "Arqueiros", "25🪵 45🪙 em toda a linha. Cada evolução dá +5 PV e +1 ataque: 30/4 → 35/5 → 40/6. Armadura sempre 0/0."],
+    ["Escaramuçadores", "Escaramuçadores", "25🍖 35🪵, o espelho do Lanceiro. Ataque baixo (2 → 3), mas armadura à distância alta: 0/3 → 0/4."],
+    ["Arqueiros montados", "Arqueiros montados", "O Arqueiro com +15 em cada recurso: 40🪵 60🪙. PV 50 → 60 e ataque 6 → 7. O Pesado ganha 1 de armadura corpo a corpo (1/0)."],
+    ["Cavalaria leve", "Cavalaria leve", "Só comida: 80🍖. O PV sobe +15 por degrau (45 → 60 → 75). Ataque 3 → 7 → 7. Armadura sempre 0/2."],
+    ["Cavaleiros", "Cavaleiros", "60🍖 75🪙. PV 100 → 120 → 160 e ataque +2 por degrau (10 → 12 → 14). Armadura 2/2; o Paladino vai a 2/3."],
+    ["Escorpiões", "Escorpiões", "75🪵 75🪙, números iguais. PV 40 → 60, ataque 11 → 14 e armadura 0/7 → 1/8."],
+    ["Manganelas", "Manganela → Onagro de Cerco", "160🪵 135🪙. PV +10 por degrau (50 → 60 → 70); ataque 40 → 55 → 75; armadura 0/6 → 0/8 → 0/8."],
+    ["Aríetes", "Aríetes", "160🪵 75🪙: a madeira da Manganela com o ouro do Escorpião. Ataque 2 → 3 → 4. Armadura corpo a corpo negativa (−3 → −2 → −1) e à distância enorme (180 → 190 → 195). PV 175 → 200 → 270."],
+    ["Galés", "Galés", "90🪵 30🪙. Ataque 6 → 7 → 9, armadura à distância 3 → 4 → 6 e PV 110 → 125 → 155."],
+    ["Galés de fogo", "Navios de fogo", "75🪵 45🪙. PV 110 → 120 → 140, ataque 2 → 3 → 4 e armadura 1/4 → 2/4 → 3/7."],
+    ["Navios de demolição", "Navios de demolição", "45🪵 80🪙 (mais ouro que madeira). Ataque enorme: 75 → 95 → 120. PV 40 → 50 → 70; armadura corpo a corpo 0 → 1 → 2, à distância sempre 0."],
+    ["Pontões", "Pontões", "75🪵 35🪙. PV +25 por degrau (85 → 110 → 135). Ataque sempre 4. Armadura à distância sempre 1; corpo a corpo 3 → 4 → 6."],
+  ];
+  const ABAS = [
+    { id: "tropas", nome: "🗡️ Tropas", intro: "A evolução nunca muda o custo: decore um custo por linha e depois só os degraus de PV, ataque e armadura.", grupos: [
+      ...LINHAS.map(([linha, t, g]) => ({ id: "l-" + linha, t, g, linha, esc: true })),
+      { id: "u-eco", t: "Economia e comércio", g: "Carroça e Barco de Comércio custam o mesmo: 100🪵 50🪙. O Aldeão é só comida (50🍖) e os barcos de trabalho só madeira: Pesca 75🪵, Transporte 125🪵.", k: ["U:Aldeão", "U:Navio de Pesca", "U:Navio de Transporte", "U:Carroça de Comércio", "U:Barco de Comércio"] },
+      { id: "u-polvora", t: "Cerco pesado e pólvora", g: "Pares redondos: Trabuco 200🪵 200🪙 e Canhão 225🪵 225🪙. O Galeão Canhoneiro tem a madeira do Trabuco (200🪵) com 150🪙. A Torre de Cerco tem o PV do Aríete (175).", k: ["U:Trabuco", "U:Canhão", "U:Galeão Canhoneiro", "U:Canhoneiro de Mão", "U:Torre de Cerco"] },
+      { id: "u-especiais", t: "Monge e Petardeiro", g: "Monge: só ouro, 100🪙, com 30 PV e armadura 0/0. Petardeiro: a Milícia com +15 de comida (65🍖 20🪙).", k: ["U:Monge", "U:Petardeiro"] },
+    ] },
+    { id: "ferraria", nome: "🔨 Ferraria", intro: "5 escadas de 3 degraus. Na Era II quase tudo custa só comida; o ouro entra a partir da Era III.", grupos: [
+      { id: "f-arm-inf", t: "Armadura de infantaria", g: "1×, 2× e 3× o pacote 100🍖 50🪙 (o primeiro degrau sem o ouro): 100🍖 → 200🍖 100🪙 → 300🍖 150🪙. Tempo +15 s: 40 → 55 → 70.", k: ["T:Armadura de Escamas", "T:Armadura de Malha", "T:Armadura de Placas"], esc: true },
+      { id: "f-arm-arq", t: "Armadura de arqueiro", g: "100🍖 → 150🍖 150🪙 → 250🍖 250🪙 (comida = ouro nos dois últimos). Mesmo tempo da armadura de infantaria: 40 → 55 → 70.", k: ["T:Armadura Ar. Acolchoada", "T:Armadura Ar. de Couro", "T:Armadura Ar. de Anéis"], esc: true },
+      { id: "f-barda", t: "Barda (armadura da cavalaria)", g: "A armadura de infantaria com +50 de comida em cada degrau: 150🍖 → 250🍖 150🪙 → 350🍖 200🪙. Tempo também +5 s: 45 → 60 → 75.", k: ["T:Barda de Escamas", "T:Barda de Malha", "T:Barda de Placas"], esc: true },
+      { id: "f-atq-dist", t: "Ataque à distância", g: "100🍖 50🪙 → dobra (200🍖 100🪙) → 300🍖 200🪙. Tempo curto, +5 s por degrau: 30 → 35 → 40.", k: ["T:Rêmige", "T:Flecha Afiada", "T:Braçadeira"], esc: true },
+      { id: "f-atq-cac", t: "Ataque corpo a corpo", g: "150🍖 → 220🍖 120🪙 → 275🍖 225🪙. Tempo +25 s por degrau: 50 → 75 → 100.", k: ["T:Forja", "T:Forja de Ferro", "T:Alto-Forno"], esc: true },
+    ] },
+    { id: "eco", nome: "🌾 Economia e eras", intro: "As tecnologias de coleta seguem escadas com números redondos; as eras sobem 30 s de cada vez.", grupos: [
+      { id: "e-eras", t: "Eras", g: "Tempo +30 s: 130 → 160 → 190. Comida 500 → 800 → 1000; ouro 0 → 200 → 800.", k: ["E:feudal", "E:castelos", "E:imperial"], esc: true },
+      { id: "e-moinho", t: "Moinho", g: "Comida = madeira em todas: 75 → 125 → 250. Tempo 20 → 40 → 70.", k: ["T:Cabresto", "T:Arado Forte", "T:Rotação de Culturas"], esc: true },
+      { id: "e-madeira", t: "Campo Madeireiro", g: "O tempo dobra: 25 → 50 → 100. Custos 100🍖 50🪵 → 150🍖 100🪵 → 300🍖 200🪵.", k: ["T:Machado Duplo", "T:Serra em Arco", "T:Serra de Dois Homens"], esc: true },
+      { id: "e-mina", t: "Campo de Mineração", g: "Ouro e pedra são idênticos. 100🍖 75🪵 (30 s) e depois 175🍖 75🪵 (75 s): a madeira não muda.", k: ["T:Mineração de Ouro", "T:Mineração Sub. de Ouro", "T:Mineração de Pedra", "T:Mineração Sub. de Pedra"] },
+      { id: "e-cc", t: "Centro da Cidade", g: "Tear: 50🪙 em 25 s, o tempo de um aldeão. Carrinho de Mão 175🍖 50🪵 (75 s) → Carroça de Mão 300🍖 200🪵 (55 s, mais rápida). Vigia da Cidade 75🍖 (25 s) → Patrulha 300🍖 100🪙 (40 s).", k: ["T:Tear", "T:Carrinho de Mão", "T:Carroça de Mão", "T:Vigia da Cidade", "T:Patrulha da Cidade"] },
+      { id: "e-pesca", t: "Pesca (Doca)", g: "Linhas de Pesca 50🍖 100🪵 (20 s) → Rede de emalhar 100🍖 125🪵 (30 s).", k: ["T:Linhas de Pesca", "T:Rede de emalhar"], esc: true },
+    ] },
+    { id: "tec", nome: "🎓 Outras tecnologias", intro: "Universidade, Mosteiro, Mercado, Castelo e os prédios militares. Procure os pares e o preço típico da Era IV.", grupos: [
+      { id: "t-constr", t: "Universidade: construções", g: "Alvenaria 150🍖 175🪵 (50 s) → Arquitetura 300🍖 200🪵 (70 s). O Guindaste de Esteira é a única com pedra (200🪵 50🪨).", k: ["T:Alvenaria", "T:Arquitetura", "T:Guindaste de Esteira", "T:Muralha Fortificada", "T:Fossos Mortais"] },
+      { id: "t-torres", t: "Universidade: torres", g: "Os aprimoramentos de torre custam só comida e madeira: Guarda 100🍖 250🪵 → Menagem 500🍖 350🪵 → Bombardeio 800🍖 400🪵. Seteiras: 250/250.", k: ["T:Torre de Guarda", "T:Torre de Menagem", "T:Torre de Bombardeio", "T:Seteiras", "T:Tiro Aquecido"] },
+      { id: "t-navios", t: "Universidade: navios", g: "Carenagem 100🍖 200🪙 → Doca Seca 200🍖 400🪙: dobra tudo. Casco Trincado 150🍖 100🪵 → Casco Carvel 350🍖 200🪵. Sifões 100🍖 175🪙 → Incendiários 200🍖 325🪙.", k: ["T:Carenagem", "T:Doca Seca", "T:Construção de Casco Trincado", "T:Casco Carvel", "T:Sifões", "T:Incendiários", "T:Construtores Navais"] },
+      { id: "t-ataque", t: "Universidade: ataque e cerco", g: "Química é o 300🍖 200🪙 e leva 100 s. Balística custa madeira e ouro (300🪵 175🪙). Engenharia de Cerco: 500🍖 600🪵.", k: ["T:Balística", "T:Química", "T:Engenharia de Cerco"] },
+      { id: "t-mosteiro", t: "Mosteiro", g: "Quase tudo só ouro. As exceções com comida são Devoção (100🍖 200🪙) e Fé (550🍖 750🪙). Heresia: 1000🪙 redondos.", k: ["T:Fervor", "T:Santidade", "T:Iluminação", "T:Xilogravura", "T:Teocracia", "T:Medicina Herbal", "T:Penitência", "T:Redenção", "T:Heresia", "T:Devoção", "T:Fé"] },
+      { id: "t-mercado", t: "Mercado", g: "Tudo comida + ouro, começando em 200🍖: Cunhagem 200🍖 100🪙 e Caravana 200🍖 200🪙. Guildas e Finanças são o par 300🍖 200🪙.", k: ["T:Cunhagem", "T:Caravana", "T:Guildas", "T:Finanças"] },
+      { id: "t-castelo", t: "Castelo", g: "Sapadores leva só 10 s e Espiões/Traição 1 s. Cadafalsos: 400🍖 400🪵. Conscrição: 150🍖 150🪙.", k: ["T:Conscrição", "T:Sapadores", "T:Cadafalsos", "T:Espiões/Traição"] },
+      { id: "t-militar", t: "Quartel, Estábulo e Arqueria", g: "+10% de velocidade custa só comida e leva 40 s: Escudeiros 100🍖 e Pecuária 150🍖. Incêndio e Perpontes levam 25 s. O Anel de Arqueria e as Táticas Partas têm 250 (madeira no Anel, ouro nas Táticas).", k: ["T:Escudeiros", "T:Incêndio", "T:Perpontes", "T:Pecuária", "T:Linhagem", "T:Anel de Arqueria", "T:Táticas Partas"] },
+      { id: "t-doca", t: "Doca: navios de guerra", g: "Médios 150🪵 100🪙 (50 s) → Pesados 400🪵 315🪙 (65 s).", k: ["T:Navios de Guerra Médios", "T:Navios de Guerra Pesados"], esc: true },
+      { id: "t-300", t: "O \"300 + 200\" da Era IV", x: true, g: "O preço típico da Era IV. 300🍖 200🪙: Química, Guildas, Finanças e Braçadeira. 300🍖 200🪵: Arquitetura, Carroça de Mão e Serra de Dois Homens.", k: ["T:Química", "T:Guildas", "T:Finanças", "T:Braçadeira", "T:Arquitetura", "T:Carroça de Mão", "T:Serra de Dois Homens"] },
+    ] },
+    { id: "predios", nome: "🏰 Prédios", intro: "Poucos números se repetem: decore os grupos de custo e de PV.", grupos: [
+      { id: "p-175", t: "Produção (175🪵)", g: "Todos custam 175🪵. PV: Quartel 1200; Campo de Arqueiros e Estábulo 1500; Mercado 1800; Mosteiro 2100.", k: ["B:Quartel", "B:Campo de Arqueiros", "B:Estábulo", "B:Mercado", "B:Mosteiro"] },
+      { id: "p-150-200", t: "150 e 200 de madeira", g: "Doca e Ferraria: 150🪵 e 1800 PV. Oficina de Cerco e Universidade: 200🪵; Oficina 1500 PV, Universidade 2100.", k: ["B:Doca", "B:Ferraria", "B:Oficina de Cerco", "B:Universidade"] },
+      { id: "p-eco", t: "Economia", g: "100🪵 e 600 PV: Moinho, Campo Madeireiro e Campo de Mineração. Armadilha de Peixe: 100🪵 com 250 PV. Fazenda 60🪵 (480 PV) e Casa 25🪵 (550 PV).", k: ["B:Moinho", "B:Campo Madeireiro", "B:Campo de Mineração", "B:Armadilha de Peixe", "B:Fazenda", "B:Casa"] },
+      { id: "p-torres", t: "Torres", g: "35🪵 125🪨 em todas (a de Bombardeio troca a madeira por 100🪙). PV ×1,5: 850 → 1500 → 2250; Bombardeio 2220. Posto Avançado: 25🪵 5🪨, 500 PV.", k: ["B:Torre de Vigia", "B:Torre de Guarda", "B:Torre de Menagem", "B:Torre de Bombardeio", "B:Posto Avançado"] },
+      { id: "p-muralhas", t: "Muralhas e portões", g: "Muralha sempre 5🪨: 1080 PV, a Fortificada 3000. Os portões custam 30: madeira no Paliçado (240 PV), pedra no de pedra (1650 PV). Paliçada: 3🪵, 150 PV.", k: ["B:Paliçada", "B:Portão Paliçado", "B:Muralha", "B:Muralha Fortificada", "B:Portão"] },
+      { id: "p-grandes", t: "Os grandes", g: "Castelo e Maravilha: 4800 PV, o dobro do Centro da Cidade (2400). Centro da Cidade 275🪵 100🪨; Castelo 650🪨; Maravilha 1000 de madeira, ouro e pedra.", k: ["B:Centro da Cidade", "B:Castelo", "B:Maravilha"] },
+    ] },
+  ];
+
+  // ---------- liga os grupos às cartas do quiz ----------
+  const TODAS = F.todas(), POR_K = Object.fromEntries(TODAS.map((x) => [F.chaveDe(x), x]));
+  const LETRA = { U: "u", T: "t", B: "b", E: "e" };
+  function resolver(ref) {
+    const [l, nome] = [ref.slice(0, 1), ref.slice(2)], tipo = LETRA[l];
+    const x = TODAS.find((y) => y.col.tipo === tipo && (tipo === "e" ? y.col.id === nome : y.col.nome === nome));
+    return x ? F.chaveDe(x) : null;
+  }
+  const GRUPOS = [], GRUPO = {}, PRINCIPAL = {}, FALTANDO = [];
+  for (const aba of ABAS) for (const g of aba.grupos) {
+    if (g.linha) g.ks = TODAS.filter((x) => x.col.tipo === "u" && window.GAME.unidades.find((u) => u.id === x.col.id).linha === g.linha)
+      .sort((a, b) => window.GAME.unidades.find((u) => u.id === a.col.id).ordem - window.GAME.unidades.find((u) => u.id === b.col.id).ordem).map(F.chaveDe);
+    else g.ks = g.k.map((r) => { const k = resolver(r); if (!k) FALTANDO.push(r); return k; }).filter(Boolean);
+    g.aba = aba.id; GRUPOS.push(g); GRUPO[g.id] = g;
+    if (!g.x) g.ks.forEach((k) => { if (!PRINCIPAL[k]) PRINCIPAL[k] = g.id; });
+  }
+  const SEM_GRUPO = TODAS.map(F.chaveDe).filter((k) => !PRINCIPAL[k]);
+
+  // ---------- valores ----------
+  const gab = (k) => D.gabarito(POR_K[k].d);
+  const nome = (k) => POR_K[k].col.nome;
+  const custoTxt = (g) => RES.filter((r) => g[r]).map((r) => `${g[r]}${IC[r]}`).join(" ") || "grátis";
+  const custoKey = (g) => RES.map((r) => g[r] || 0).join("/");
+  // campos mostrados como "pílulas": custo inteiro, PV, ataque, armadura (corpo/dist.) ou tempo
+  function pilulas(k) {
+    const g = gab(k), l = [{ id: "custo", ic: "💰", v: custoTxt(g) }];
+    if ("tempo" in g) l.push({ id: "tempo", ic: "⏱", v: g.tempo + " s" });
+    if ("hp" in g) l.push({ id: "hp", ic: "❤", v: g.hp });
+    if ("atq" in g) l.push({ id: "atq", ic: "⚔", v: g.atq });
+    if ("am" in g) l.push({ id: "arm", ic: "🛡", v: `${g.am}/${g.ap}` });
+    return l;
+  }
+
+  // ---------- progresso por carta e por grupo (o mesmo do Quiz de cartas) ----------
+  function estado(k) {
+    const it = F.item(k);
+    if (!it || !(it.a || it.e || it.c)) return "novo";
+    // dominada = acertou da última vez (dados antigos, sem "u": acertou e nunca errou)
+    if (it.u !== undefined) return it.u === 1 ? "ok" : "erro";
+    return (it.a || 0) > 0 && !(it.e || 0) && !(it.c || 0) ? "ok" : "erro";
+  }
+  function progressoGrupo(g) {
+    const e = g.ks.map(estado), ok = e.filter((x) => x === "ok").length, err = e.filter((x) => x === "erro").length;
+    const ic = ok === e.length ? "⭐" : err ? "🟡" : ok ? "🔵" : "⚪";
+    return { ok, err, n: e.length, ic, txt: ok === e.length ? "dominado" : err ? "errando" : ok ? "em andamento" : "não treinado" };
+  }
+
+  // ---------- tela principal ----------
+  let revelados = new Set(), comp = null, foco = null;
+  function render() {
+    const aba = ABAS.find((a) => a.id === st.aba) || ABAS[0];
+    const tot = GRUPOS.filter((g) => !g.x), dom = tot.filter((g) => progressoGrupo(g).ic === "⭐").length;
+    $("#tela-dicas").innerHTML = `
+      <div class="chips dc-abas">${ABAS.map((a) => { const gs = a.grupos.filter((g) => !g.x), d = gs.filter((g) => progressoGrupo(g).ic === "⭐").length; return `<button class="chip ${a.id === aba.id ? "on" : ""}" data-dc-aba="${a.id}">${a.nome} <small class="muted" style="display:inline">${d}/${gs.length}</small></button>`; }).join("")}</div>
+      <div class="dc-topo">
+        <button class="btn" id="dc-ocultar">${st.ocultar ? "👁 Mostrar números" : "🙈 Esconder números"}</button>
+        <button class="btn primario" data-ir="dicas-padrao">🧩 Achar o padrão</button>
+      </div>
+      <p class="muted pequeno">${esc(aba.intro)} ${st.ocultar ? "Toque num <b>?</b> para conferir." : ""} ${dom} de ${tot.length} grupos dominados no total.</p>
+      ${aba.grupos.map(grupoHtml).join("")}
+      <p class="muted pequeno">⭐ dominado · 🔵 em andamento · 🟡 errando · ⚪ não treinado. Conta o que você forja no Quiz de cartas e o que completa aqui.</p>`;
+    if (foco) { const el = document.getElementById("dc-" + foco); foco = null; if (el) { el.scrollIntoView({ block: "start" }); el.classList.add("dc-pisca"); } }
+  }
+  function pilulaHtml(k, p) {
+    const chave = k + "|" + p.id, oculto = st.ocultar && !revelados.has(chave);
+    return `<button class="dc-pil ${oculto ? "oculta" : ""}" data-dc-rev="${esc(chave)}" ${oculto ? "" : "tabindex=-1"}><span>${p.ic}</span> ${oculto ? "?" : esc(String(p.v))}</button>`;
+  }
+  function linhaHtml(k) {
+    const e = estado(k);
+    return `<div class="dc-linha"><button class="dc-nome" data-dc-carta="${esc(k)}"><span class="dc-st ${e}"></span>${esc(nome(k))}</button><div class="dc-pils">${pilulas(k).map((p) => pilulaHtml(k, p)).join("")}</div></div>`;
+  }
+  function grupoHtml(g) {
+    const p = progressoGrupo(g), emComp = comp && comp.gid === g.id;
+    return `<section class="dc-grupo ${g.x ? "cruzado" : ""}" id="dc-${esc(g.id)}">
+      <div class="dc-g-topo"><h3>${esc(g.t)}</h3><span class="dc-prog" title="${p.txt}">${p.ic} ${p.ok}/${p.n}</span></div>
+      <p class="dc-gancho">💡 ${esc(g.g)}</p>
+      ${emComp ? completarHtml(g) : `<div class="dc-linhas">${g.ks.map(linhaHtml).join("")}</div>`}
+      <div class="dc-acoes">
+        ${emComp ? `<button class="btn" data-dc-comp-sair="1">Fechar</button>` : g.ks.length > 1 ? `<button class="btn" data-dc-comp="${esc(g.id)}">✍️ Completar</button>` : ""}
+        ${st.ocultar && !emComp ? `<button class="btn" data-dc-revtudo="${esc(g.id)}">👁 Revelar</button>` : ""}
+        <button class="btn primario" data-dc-treinar="${esc(g.id)}">🔨 Treinar</button>
+      </div>
+    </section>`;
+  }
+
+  // ---------- completar a escada: a primeira carta aparece, você digita as outras ----------
+  function camposComp(k) {
+    const g = gab(k), l = RES.filter((r) => comp.res.includes(r)).map((r) => ({ id: r, rot: IC[r] }));
+    if ("tempo" in g) l.push({ id: "tempo", rot: "⏱ s" });
+    if ("hp" in g) l.push({ id: "hp", rot: "❤ PV" });
+    if ("atq" in g) l.push({ id: "atq", rot: "⚔ Atq" });
+    if ("am" in g) l.push({ id: "am", rot: "🛡 Corpo" }, { id: "ap", rot: "🛡 Dist." });
+    return l;
+  }
+  const iguala = (dig, certo) => { if (dig === undefined || String(dig).trim() === "") dig = 0; const n = Number(String(dig).replace(",", ".").replace("−", "-")); return Number.isFinite(n) && (Math.round(n) === Math.round(certo) || (certo < 0 && Math.round(n) === -Math.round(certo))); };
+  function completarHtml(g) {
+    const [k0, ...resto] = g.ks;
+    const linhas = resto.map((k) => {
+      const gk = gab(k), cs = camposComp(k);
+      return `<div class="dc-comp-l"><b class="dc-comp-n">${esc(nome(k))}${comp.feito ? ` ${comp.ok[k] ? "✅" : "❌"}` : ""}</b><div class="dc-comp-cs">${cs.map((c) => {
+        const v = (comp.v[k] || {})[c.id] ?? "", cls = comp.feito ? (iguala(v, gk[c.id] || 0) ? "certo" : "errado") : "";
+        return `<label class="dc-in ${cls}"><small>${c.rot}</small><input inputmode="numeric" autocomplete="off" data-dc-in="${esc(k)}|${c.id}" value="${esc(String(v))}" ${comp.feito ? "readonly" : ""}>${comp.feito && cls === "errado" ? `<em>${gk[c.id] || 0}</em>` : ""}</label>`;
+      }).join("")}</div></div>`;
+    }).join("");
+    return `<p class="muted pequeno">A primeira carta está à mostra. Complete as outras com o padrão (campo vazio = 0; armadura negativa pode ser digitada sem o sinal).</p>
+      <div class="dc-linhas">${linhaHtmlAberta(k0)}</div>
+      <div class="dc-comp">${linhas}</div>
+      ${comp.feito ? `<p class="${comp.acertos === resto.length ? "ok-txt" : "bad-txt"}">${comp.acertos} de ${resto.length} cartas certas.</p><button class="btn" data-dc-comp="${esc(g.id)}">🔁 De novo</button>` : `<button class="btn primario" data-dc-conferir="1">Conferir</button>`}`;
+  }
+  function linhaHtmlAberta(k) { return `<div class="dc-linha"><span class="dc-nome">${esc(nome(k))}</span><div class="dc-pils">${pilulas(k).map((p) => `<span class="dc-pil"><span>${p.ic}</span> ${esc(String(p.v))}</span>`).join("")}</div></div>`; }
+  function abrirCompletar(gid) {
+    const g = GRUPO[gid];
+    comp = { gid, v: {}, feito: false, ok: {}, acertos: 0, res: RES.filter((r) => g.ks.some((k) => gab(k)[r])) };
+    render();
+    const el = document.getElementById("dc-" + gid); if (el) el.scrollIntoView({ block: "start" });
+  }
+  function conferir() {
+    const g = GRUPO[comp.gid];
+    g.ks.slice(1).forEach((k) => {
+      const gk = gab(k), cs = camposComp(k);
+      const ok = cs.every((c) => iguala((comp.v[k] || {})[c.id], gk[c.id] || 0)) && RES.every((r) => comp.res.includes(r) || !gk[r]);
+      comp.ok[k] = ok; if (ok) comp.acertos++;
+      F.registrar(k, ok);
+    });
+    comp.feito = true;
+    st.completar = (st.completar || []).concat({ d: Date.now(), g: comp.gid, n: g.ks.length - 1, a: comp.acertos }).slice(-300); salvar();
+    render();
+    const el = document.getElementById("dc-" + comp.gid); if (el) el.scrollIntoView({ block: "start" });
+  }
+
+  $("#tela-dicas").addEventListener("input", (e) => {
+    const i = e.target.closest("[data-dc-in]"); if (!i || !comp) return;
+    const [k, c] = i.dataset.dcIn.split("|"); (comp.v[k] = comp.v[k] || {})[c] = i.value;
+  });
+  $("#tela-dicas").addEventListener("keydown", (e) => {
+    const i = e.target.closest("[data-dc-in]"); if (!i || e.key !== "Enter") return;
+    e.preventDefault();
+    const todos = [...document.querySelectorAll("#tela-dicas [data-dc-in]")], n = todos.indexOf(i);
+    if (n < todos.length - 1) todos[n + 1].focus(); else conferir();
+  });
+  $("#tela-dicas").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    const d = b.dataset;
+    if (d.dcAba) { st.aba = d.dcAba; comp = null; salvar(); render(); return window.scrollTo(0, 0); }
+    if (b.id === "dc-ocultar") { st.ocultar = !st.ocultar; revelados = new Set(); salvar(); return render(); }
+    if (d.dcRev) { if (!st.ocultar) return; revelados.has(d.dcRev) ? revelados.delete(d.dcRev) : revelados.add(d.dcRev); b.outerHTML = pilulaHtml(d.dcRev.split("|")[0], pilulas(d.dcRev.split("|")[0]).find((p) => p.id === d.dcRev.split("|")[1])); return; }
+    if (d.dcRevtudo) { GRUPO[d.dcRevtudo].ks.forEach((k) => pilulas(k).forEach((p) => revelados.add(k + "|" + p.id))); return render(); }
+    if (d.dcComp) return abrirCompletar(d.dcComp);
+    if (d.dcCompSair) { const gid = comp.gid; comp = null; render(); const el = document.getElementById("dc-" + gid); if (el) el.scrollIntoView({ block: "start" }); return; }
+    if (d.dcConferir) return conferir();
+    if (d.dcTreinar) return F.comecar(GRUPO[d.dcTreinar].ks, "dicas");
+    if (d.dcCarta) { const x = POR_K[d.dcCarta]; if (x && C.abrir) C.abrir(x.col.tipo, x.col.id); }
+  });
+
+  // ---------- achar o padrão ----------
+  let P = null; // { qs, i, escolha, acertos }
+  const embaralhar = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const sorteio = (a) => a[Math.floor(Math.random() * a.length)];
+  const ganchoDe = (k) => (PRINCIPAL[k] ? GRUPO[PRINCIPAL[k]].g : "");
+  // 1) qual carta custa o mesmo que X?
+  function qMesmoCusto() {
+    const ks = TODAS.map(F.chaveDe), por = {};
+    ks.forEach((k) => (por[custoKey(gab(k))] = por[custoKey(gab(k))] || []).push(k));
+    const classes = Object.values(por).filter((l) => l.length >= 2);
+    const cl = sorteio(classes), [x, y] = embaralhar(cl);
+    // atalho fácil demais: mesma linha. Prefere um par de grupos diferentes quando existir
+    const outro = embaralhar(cl.filter((k) => k !== x && PRINCIPAL[k] !== PRINCIPAL[x]))[0] || y;
+    const ck = custoKey(gab(x)), tipo = x[0];
+    const dis = embaralhar(ks.filter((k) => custoKey(gab(k)) !== ck && k[0] === tipo)), usados = new Set(), op = [];
+    for (const k of dis) { const c = custoKey(gab(k)); if (usados.has(c) || nome(k) === nome(outro)) continue; usados.add(c); op.push(k); if (op.length === 3) break; }
+    return { tipo: "Mesmo custo", perg: `Qual destas cartas custa exatamente o mesmo que <b>${esc(nome(x))}</b>?`,
+      ops: embaralhar([outro, ...op]).map((k) => ({ t: nome(k), ok: k === outro })),
+      exp: `${esc(nome(x))} e ${esc(nome(outro))} custam ${custoTxt(gab(x))}.`, gancho: ganchoDe(x), grupo: PRINCIPAL[x] };
+  }
+  // 2) qual é o próximo degrau da escada?
+  function qDegrau() {
+    const gs = GRUPOS.filter((g) => g.esc && g.ks.length >= 3);
+    for (let t = 0; t < 30; t++) {
+      const g = sorteio(gs), u = g.ks[0][0] === "u";
+      const campos = u ? [["hp", "❤ PV"], ["atq", "⚔ Ataque"]] : [["custo", "💰 Custo"], ["tempo", "⏱ Tempo"]];
+      const [cid, rot] = sorteio(campos);
+      const val = (k) => (cid === "custo" ? custoTxt(gab(k)) : gab(k)[cid]);
+      const vs = g.ks.map(val);
+      if (new Set(vs.map(String)).size < 2) continue;
+      const ultimo = g.ks[g.ks.length - 1], certo = val(ultimo);
+      let erradas;
+      if (cid === "custo") {
+        const rs = RES.filter((r) => gab(ultimo)[r]);
+        erradas = embaralhar([...new Set(TODAS.map(F.chaveDe).filter((k) => k[0] === ultimo[0] && RES.filter((r) => gab(k)[r]).join() === rs.join()).map(val))].filter((v) => v !== certo)).slice(0, 3);
+        if (erradas.length < 3) continue;
+      } else {
+        const passo = Math.max(1, Math.abs(vs[vs.length - 1] - vs[vs.length - 2]) || 1);
+        const cand = new Set([certo + passo, certo - passo, vs[vs.length - 2], certo + 2 * passo, Math.round(certo * 1.2), Math.round(certo * 0.8), certo + 5, certo - 5].filter((v) => v !== certo && v > 0));
+        erradas = embaralhar([...cand]).slice(0, 3);
+        if (erradas.length < 3) continue;
+      }
+      const seq = g.ks.slice(0, -1).map((k) => `${esc(nome(k))} <b>${esc(String(val(k)))}${cid === "tempo" ? " s" : ""}</b>`).join(" → ");
+      return { tipo: "Próximo degrau", perg: `${esc(g.t)} · ${rot}<br><span class="dc-seq">${seq} → ${esc(nome(ultimo))} <b>?</b></span>`,
+        ops: embaralhar([certo, ...erradas]).map((v) => ({ t: String(v) + (cid === "tempo" ? " s" : ""), ok: v === certo })),
+        exp: `${esc(nome(ultimo))}: ${esc(String(certo))}${cid === "tempo" ? " s" : ""}.`, gancho: g.g, grupo: g.id };
+    }
+    return qMesmoCusto();
+  }
+  // 3) espelhos e números iguais, montados dos dados
+  function qEspelho() {
+    const ks = TODAS.map(F.chaveDe).filter((k) => k[0] === "u");
+    const pares = [];
+    ks.forEach((a) => ks.forEach((b) => {
+      const ga = gab(a), gb = gab(b); if (a >= b) return;
+      const ra = RES.filter((r) => ga[r]), rb = RES.filter((r) => gb[r]);
+      if (ra.length === 2 && rb.join() === ra.join() && ga[ra[0]] === gb[ra[1]] && ga[ra[1]] === gb[ra[0]] && ga[ra[0]] !== ga[ra[1]] && PRINCIPAL[a] !== PRINCIPAL[b]) pares.push([a, b]);
+      else if (ra.length === 2 && rb.length === 2 && ra.join() !== rb.join() && ga[ra[0]] === gb[rb[1]] && ga[ra[1]] === gb[rb[0]] && PRINCIPAL[a] !== PRINCIPAL[b]) pares.push([a, b]);
+    }));
+    if (!pares.length) return qMesmoCusto();
+    const [a, b] = embaralhar(sorteio(pares));
+    const lin = (k) => (PRINCIPAL[k] ? GRUPO[PRINCIPAL[k]].ks : [k]);
+    const dis = embaralhar(ks.filter((k) => !lin(b).includes(k) && !lin(a).includes(k))), op = [], vistos = new Set();
+    for (const k of dis) { if (vistos.has(PRINCIPAL[k] || k)) continue; vistos.add(PRINCIPAL[k] || k); op.push(k); if (op.length === 3) break; }
+    return { tipo: "Espelho", perg: `<b>${esc(nome(a))}</b> custa ${custoTxt(gab(a))}. Qual tropa usa os mesmos números, trocados de lugar?`,
+      ops: embaralhar([b, ...op]).map((k) => ({ t: nome(k), ok: k === b })),
+      exp: `${esc(nome(b))} custa ${custoTxt(gab(b))}.`, gancho: ganchoDe(b), grupo: PRINCIPAL[b] };
+  }
+  function novaRodada() {
+    const gens = [qMesmoCusto, qDegrau, qDegrau, qMesmoCusto, qDegrau, qEspelho, qMesmoCusto, qDegrau];
+    const qs = [], vistos = new Set();
+    for (const gen of gens) { for (let t = 0; t < 8; t++) { const q = gen(); if (!vistos.has(q.perg)) { vistos.add(q.perg); qs.push(q); break; } } }
+    P = { qs, i: 0, escolha: null, acertos: 0 };
+  }
+  function renderPadrao() {
+    if (!P) novaRodada();
+    const el = $("#tela-dicas-padrao");
+    if (P.i >= P.qs.length) {
+      const ult = (st.padrao || []).slice(-10), media = ult.length ? Math.round(ult.reduce((s, x) => s + x.a / x.n, 0) / ult.length * 100) : 0;
+      el.innerHTML = `<div class="fq-placar"><b>${P.acertos}</b> de ${P.qs.length} padrões certos</div>
+        <p class="muted pequeno centro">Média das últimas ${ult.length} rodadas: ${media}%.</p>
+        <button class="btn primario grande" id="dp-mais">🧩 Mais ${P.qs.length}</button>
+        <button class="btn" data-ir="dicas">💡 Voltar às dicas</button>`;
+      return;
+    }
+    const q = P.qs[P.i], r = P.escolha !== null;
+    el.innerHTML = `<div class="fq-topo"><span>${esc(q.tipo)} · <b>${P.i + 1}</b> de ${P.qs.length}</span><span>✅ ${P.acertos}</span></div>
+      <div class="fq-barra"><i style="width:${(P.i / P.qs.length) * 100}%"></i></div>
+      <p class="dc-perg">${q.perg}</p>
+      <div class="opcoes">${q.ops.map((o, i) => `<button class="btn opcao ${r ? (o.ok ? "certa" : i === P.escolha ? "errada" : "") : ""}" data-dp-op="${i}" ${r ? "disabled" : ""}>${esc(o.t)}</button>`).join("")}</div>
+      ${r ? `<div class="explicacao ${q.ops[P.escolha].ok ? "ok" : "bad"}"><b>${q.ops[P.escolha].ok ? "Isso!" : "Não foi dessa vez."}</b> ${q.exp}${q.gancho ? `<br><span class="muted">💡 ${esc(q.gancho)}</span>` : ""}</div>
+        <button class="btn primario grande" id="dp-prox">${P.i === P.qs.length - 1 ? "Ver resultado" : "Próxima ▶"}</button>` : ""}`;
+  }
+  $("#tela-dicas-padrao").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.dpOp !== undefined && P.escolha === null) { P.escolha = Number(b.dataset.dpOp); if (P.qs[P.i].ops[P.escolha].ok) P.acertos++; return renderPadrao(); }
+    if (b.id === "dp-prox") {
+      P.i++; P.escolha = null;
+      if (P.i >= P.qs.length) { st.padrao = (st.padrao || []).concat({ d: Date.now(), n: P.qs.length, a: P.acertos }).slice(-300); salvar(); }
+      renderPadrao(); return window.scrollTo(0, 0);
+    }
+    if (b.id === "dp-mais") { novaRodada(); return renderPadrao(); }
+  });
+
+  A.registrarTela("dicas", "Dicas para decorar", () => { comp = null; render(); });
+  A.registrarTela("dicas-padrao", "Achar o padrão", () => { if (!P || P.i >= P.qs.length) novaRodada(); renderPadrao(); });
+  A.voltarPara("dicas-padrao", "dicas");
+
+  // API: o Quiz de cartas mostra a dica do grupo e abre a dica completa
+  window.DICAS = {
+    grupoDe: (k) => (PRINCIPAL[k] ? { id: PRINCIPAL[k], titulo: GRUPO[PRINCIPAL[k]].t, gancho: GRUPO[PRINCIPAL[k]].g } : null),
+    abrir: (gid) => { const g = GRUPO[gid]; if (!g) return; st.aba = g.aba; salvar(); foco = gid; comp = null; A.ir("dicas"); },
+    resumo: () => {
+      const gs = GRUPOS.filter((g) => !g.x).map((g) => ({ g, p: progressoGrupo(g) }));
+      return { grupos: gs.length, dominados: gs.filter((x) => x.p.ic === "⭐").length, errando: gs.filter((x) => x.p.ic === "🟡").map((x) => x.g), padrao: st.padrao || [], completar: st.completar || [],
+        porAba: ABAS.map((a) => { const l = gs.filter((x) => x.g.aba === a.id); return { nome: a.nome, n: l.length, ok: l.filter((x) => x.p.ic === "⭐").length }; }) };
+    },
+    _diag: { FALTANDO, SEM_GRUPO, GRUPOS, rodada: () => { novaRodada(); return P.qs; } },
+  };
+})();
+</script>
+<script>
+/* Meu progresso de todos os modos + backup (exportar e importar um arquivo). */
+(function () {
+  const A = window.APP, esc = A.esc;
+  const $ = (s) => document.querySelector(s);
+  const PREFIXO = "aoe2quiz.", META = "aoe2quiz-meta";
+  const ler = (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } };
+  const meta = () => ler(META) || {};
+  const chaves = () => { const l = []; try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.startsWith(PREFIXO)) l.push(k); } } catch (e) {} return l; };
+  const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
+  const dataTxt = (t) => new Date(t).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
+  const diasDesde = (t) => Math.floor((Date.now() - t) / 86400000);
+
+  const card = (v, l) => `<div class="c"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+  const barra = (a, b, txt) => `<div class="pg-barra" title="${a} de ${b}"><i style="width:${pct(a, b)}%"></i><span>${txt || `${a} de ${b} (${pct(a, b)}%)`}</span></div>`;
+  const bloco = (ic, nome, ir, corpo) => `<section class="pg-modo"><div class="pg-modo-topo"><h3>${ic} ${nome}</h3>${ir ? `<button class="link" data-ir="${ir}">Abrir ▸</button>` : ""}</div>${corpo}</section>`;
+
+  function render() {
+    const el = $("#prog-modos"); if (!el) return;
+    let h = `<p class="muted pequeno">Tudo é salvo sozinho neste aparelho. Use o backup lá embaixo para levar o progresso para outro celular ou não perder ao limpar o navegador.</p>`;
+
+    // Quiz de cartas
+    const F = window.FORJA && window.FORJA.resumo();
+    if (F) {
+      const ses = F.sessoes || [], ult = ses.slice(-10), media = ult.length ? Math.round(ult.reduce((s, x) => s + x.a / x.n, 0) / ult.length * 100) : 0;
+      const todas = window.FORJA.todas(), porTipo = [["u", "Tropas"], ["b", "Prédios"], ["t", "Tecnologias"], ["e", "Eras"]].map(([t, n]) => {
+        const l = todas.filter((x) => x.col.tipo === t); return { n, tot: l.length, ok: l.filter((x) => window.FORJA.dominada(F.itens[window.FORJA.chaveDe(x)])).length };
+      });
+      const errei = todas.filter((x) => { const it = F.itens[window.FORJA.chaveDe(x)]; return it && !window.FORJA.dominada(it); }).map(window.FORJA.chaveDe);
+      h += bloco("🔨", "Quiz de cartas", "fq-config", `
+        <div class="cards-resumo">${card(F.dominadas, "dominadas")}${card(ses.length, "rodadas")}${card(media + "%", "média (10 últ.)")}</div>
+        ${barra(F.dominadas, F.total, `${F.dominadas} de ${F.total} cartas forjadas certo da última vez`)}
+        <div class="pg-sub">${porTipo.map((x) => `<div><small>${x.n}</small>${barra(x.ok, x.tot, `${x.ok}/${x.tot}`)}</div>`).join("")}</div>
+        ${errei.length ? `<button class="btn" id="pg-fq-erradas">🔁 Treinar as ${errei.length} que errei da última vez</button>` : ""}`);
+      el._errei = errei;
+    }
+
+    // Dicas
+    const Dc = window.DICAS && window.DICAS.resumo();
+    if (Dc) {
+      const pd = Dc.padrao, ultP = pd.slice(-10), mediaP = ultP.length ? Math.round(ultP.reduce((s, x) => s + x.a / x.n, 0) / ultP.length * 100) : 0;
+      const cp = Dc.completar, cA = cp.reduce((s, x) => s + x.a, 0), cN = cp.reduce((s, x) => s + x.n, 0);
+      h += bloco("💡", "Dicas para decorar", "dicas", `
+        <div class="cards-resumo">${card(`${Dc.dominados}/${Dc.grupos}`, "grupos ⭐")}${card(pd.length, `padrão · ${mediaP}%`)}${card(cp.length, `escadas · ${pct(cA, cN)}%`)}</div>
+        <div class="pg-sub">${Dc.porAba.map((x) => `<div><small>${esc(x.nome)}</small>${barra(x.ok, x.n, `${x.ok}/${x.n}`)}</div>`).join("")}</div>
+        ${Dc.errando.length ? `<p class="muted pequeno">🟡 Errando: ${Dc.errando.slice(0, 6).map((g) => `<button class="link" data-pg-dica="${esc(g.id)}">${esc(g.t)}</button>`).join(" · ")}</p>` : ""}`);
+    }
+
+    // Duelo
+    const du = (ler(PREFIXO + "duelo.v1") || {}).hist || [];
+    { const v = du.filter((x) => x.r === 1).length, a = du.reduce((s, x) => s + (x.a || 0), 0), e = du.reduce((s, x) => s + (x.e || 0), 0);
+      h += bloco("🃏", "Duelo de cartas", "duelo-config", `<div class="cards-resumo">${card(du.length, "partidas")}${card(v, `vitórias · ${pct(v, du.length)}%`)}${card(pct(a, a + e) + "%", "forjas certas")}</div>`); }
+
+    // Coleção
+    const C = window.CARTAS;
+    if (C) { const vistas = Object.keys((ler(PREFIXO + "colecao.v1") || {}).vistas || {}).length, tot = C.todas().length;
+      h += bloco("📚", "Coleção de cartas", "cartas", `${barra(Math.min(vistas, tot), tot, `${Math.min(vistas, tot)} de ${tot} cartas abertas`)}<p class="muted pequeno">${C.qtdImagens()} imagens nas cartas.</p>`); }
+
+    // Modos que só aparecem se você já jogou
+    const bat = (ler(PREFIXO + "batalha.v1") || {}).hist || [], pc = (ler(PREFIXO + "partida.v1") || {}).hist || [];
+    if (bat.length) { const v = bat.filter((x) => x.r === 1).length; h += bloco("⚔️", "Batalha de cartas", "bat-config", `<div class="cards-resumo">${card(bat.length, "batalhas")}${card(v, "vitórias")}${card(pct(v, bat.length) + "%", "aproveitamento")}</div>`); }
+    if (pc.length) { const v = pc.filter((x) => x.r === 1).length; h += bloco("🏰", "Partida completa", "pc-config", `<div class="cards-resumo">${card(pc.length, "partidas")}${card(v, "vitórias")}${card(pct(v, pc.length) + "%", "aproveitamento")}</div>`); }
+    el.innerHTML = h;
+
+    const m = meta(), n = chaves().length;
+    $("#prog-backup").innerHTML = `<section class="pg-modo pg-backup"><h3>💾 Backup do progresso</h3>
+      <p class="muted pequeno">O arquivo leva o progresso de todos os modos, as configurações e as partidas salvas. As imagens das cartas não vão (o pacote se instala sozinho de novo).</p>
+      <p class="pequeno">${m.ultimoBackup ? `Último backup: <b>${dataTxt(m.ultimoBackup)}</b>${diasDesde(m.ultimoBackup) >= 1 ? ` (há ${diasDesde(m.ultimoBackup)} dia${diasDesde(m.ultimoBackup) > 1 ? "s" : ""})` : " (hoje)"}.` : "Você ainda não fez nenhum backup."}${m.ultimaImportacao ? ` Importado em ${dataTxt(m.ultimaImportacao)}.` : ""}</p>
+      <div class="dc-topo"><button class="btn primario" id="pg-exportar" ${n ? "" : "disabled"}>⬇️ Exportar</button><label class="btn">⬆️ Importar<input type="file" id="pg-importar" accept=".json,application/json" hidden></label></div>
+    </section>`;
+  }
+
+  // ---------- exportar ----------
+  async function exportar() {
+    const dados = {};
+    chaves().forEach((k) => { const v = ler(k); if (v !== null) dados[k] = v; });
+    const agora = new Date(), nomeArq = `aoe2-quiz-progresso-${agora.toISOString().slice(0, 10)}.json`;
+    const txt = JSON.stringify({ app: "aoe2-quiz", formato: 1, criado: agora.toISOString(), dados });
+    const arq = new File([txt], nomeArq, { type: "application/json" });
+    let feito = false;
+    try {
+      if (/android|iphone|ipad|ipod/i.test(navigator.userAgent) && navigator.canShare && navigator.canShare({ files: [arq] })) { await navigator.share({ files: [arq], title: "Backup AoE2 Quiz" }); feito = true; }
+    } catch (e) { if (e && e.name === "AbortError") return; }
+    if (!feito) {
+      const url = URL.createObjectURL(arq), a = document.createElement("a");
+      a.href = url; a.download = nomeArq; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    }
+    try { localStorage.setItem(META, JSON.stringify({ ...meta(), ultimoBackup: Date.now() })); } catch (e) {}
+    render();
+  }
+
+  // ---------- importar ----------
+  async function importar(file) {
+    let obj;
+    try { obj = JSON.parse(await file.text()); } catch (e) { return A.avisar("Esse arquivo não é um backup do AoE2 Quiz (não deu para ler o JSON)."); }
+    if (!obj || obj.app !== "aoe2-quiz" || !obj.dados || typeof obj.dados !== "object") return A.avisar("Esse arquivo não é um backup do AoE2 Quiz.");
+    const ks = Object.keys(obj.dados).filter((k) => k.startsWith(PREFIXO));
+    if (!ks.length) return A.avisar("O backup está vazio.");
+    const quando = obj.criado ? dataTxt(obj.criado) : "data desconhecida";
+    if (!(await A.confirmar(`Importar o backup de ${quando}? Ele substitui o progresso atual deste aparelho em todos os modos.`, "Importar", "Cancelar"))) return;
+    try {
+      chaves().forEach((k) => localStorage.removeItem(k));
+      ks.forEach((k) => localStorage.setItem(k, JSON.stringify(obj.dados[k])));
+      localStorage.setItem(META, JSON.stringify({ ...meta(), ultimaImportacao: Date.now(), ultimoBackup: obj.criado ? Date.parse(obj.criado) : Date.now() }));
+    } catch (e) { return A.avisar("Não deu para salvar o backup neste aparelho (armazenamento cheio ou bloqueado)."); }
+    location.hash = "progresso"; location.reload();
+  }
+
+  function apagarTudo() {
+    chaves().forEach((k) => { try { localStorage.removeItem(k); } catch (e) {} });
+    location.hash = "progresso"; location.reload();
+  }
+
+  // lembrete no início: tem progresso e o último backup tem 14 dias ou mais (ou nunca)
+  function lembrete() {
+    const el = $("#lembrete-backup"); if (!el) return;
+    const m = meta(), F = window.FORJA && window.FORJA.resumo();
+    const temProgresso = (F && Object.keys(F.itens).length >= 10) || ((ler(PREFIXO + "v1") || {}).partidas || []).length >= 3;
+    const dias = m.ultimoBackup ? diasDesde(m.ultimoBackup) : null;
+    el.hidden = !temProgresso || (dias !== null && dias < 14);
+    if (!el.hidden) el.innerHTML = dias === null ? "💾 Você ainda não fez backup do seu progresso." : `💾 Seu último backup foi há ${dias} dias.`;
+  }
+
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.id === "pg-exportar") return exportar();
+    if (b.id === "pg-fq-erradas") { const l = $("#prog-modos")._errei; if (l && l.length) window.FORJA.comecar(l); return; }
+    if (b.dataset.pgDica) return window.DICAS.abrir(b.dataset.pgDica);
+  });
+  document.addEventListener("change", (e) => { if (e.target.id === "pg-importar" && e.target.files[0]) { importar(e.target.files[0]); e.target.value = ""; } });
+
+  window.PROGRESSO = { render, lembrete, apagarTudo, exportar };
+  lembrete();
 })();
 </script>
 
