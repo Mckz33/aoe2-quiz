@@ -1514,7 +1514,15 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   const RENDERS = {};
   const VOLTAR = { "bat-exercito": "bat-config", "bat-luta": "bat-config" }, GUARDAS = {};
   let atual = "inicio", bloqueioVoltar = false;
+  // de onde o jogador veio quando abriu um modo a partir de Progresso ou Dicas: o botão voltar do topo retorna para lá
+  const HUBS = ["progresso", "dicas"], VIA = {};
   function ir(tela, push = true) {
+    if (push) {
+      if (tela === "inicio") for (const k in VIA) delete VIA[k];
+      else if (HUBS.includes(atual) && tela !== atual) VIA[tela] = atual;
+      else if (VIA[atual] && tela !== VIA[atual] && !HUBS.includes(tela)) VIA[tela] = VIA[atual];
+      else delete VIA[tela];
+    }
     document.querySelectorAll(".tela").forEach((s) => (s.hidden = s.id !== "tela-" + tela));
     $("#titulo").textContent = TITULOS[tela];
     $("#btn-voltar").hidden = tela === "inicio";
@@ -1538,7 +1546,8 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     if (GUARDAS[atual]) { if (!(await GUARDAS[atual]())) return; }
     else if (bloqueioVoltar && !(await confirmar("Sair agora? A batalha atual será perdida.", "Sair", "Ficar"))) return;
     bloqueioVoltar = false;
-    ir(VOLTAR[atual] || "inicio");
+    const v = VIA[atual] || (typeof VOLTAR[atual] === "function" ? VOLTAR[atual]() : VOLTAR[atual]);
+    ir(v || "inicio");
   };
   document.addEventListener("click", (e) => { const b = e.target.closest("[data-ir]"); if (b) ir(b.dataset.ir); });
 
@@ -4335,6 +4344,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   document.addEventListener("click", (e) => { if (e.target.closest("[data-ir]") || e.target.id === "btn-voltar") clearTimeout(timer); });
 
   A.registrarTela("bat-tab", "Tabuleiro", null);
+  A.voltarPara("bat-tab", () => (cfg ? "pc-base" : "bat-exercito"));
   // na partida completa não dá para sair no meio da batalha pelo botão voltar
   A.guardarVoltar("bat-tab", async () => {
     if (!cfg || fase === "fim") return true;
