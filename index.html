@@ -1519,8 +1519,10 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   function ir(tela, push = true) {
     if (push) {
       if (tela === "inicio") for (const k in VIA) delete VIA[k];
-      else if (HUBS.includes(atual) && tela !== atual) VIA[tela] = atual;
-      else if (VIA[atual] && tela !== VIA[atual] && !HUBS.includes(tela)) VIA[tela] = VIA[atual];
+      else if (VIA[atual] === tela) delete VIA[tela];                       // voltando para a origem: limpa
+      else if (HUBS.includes(atual) && tela !== atual) VIA[tela] = atual;   // abriu um modo a partir de Dicas/Progresso
+      else if (HUBS.includes(tela) && atual !== "inicio") VIA[tela] = atual; // abriu Dicas/Progresso de dentro de outro modo (ex.: "Ver a dica completa")
+      else if (VIA[atual] && !HUBS.includes(tela)) VIA[tela] = VIA[atual];
       else delete VIA[tela];
     }
     document.querySelectorAll(".tela").forEach((s) => (s.hidden = s.id !== "tela-" + tela));
