@@ -3,7 +3,7 @@
  * Ícones e manifesto: cópia guardada primeiro.
  * Fontes do Google e JSZip (cdnjs): usa a cópia guardada e atualiza em segundo plano.
  * Ao publicar uma versão nova, troque o número em VERSAO para limpar as cópias antigas. */
-const VERSAO = "aoe2quiz-v29.2";
+const VERSAO = "aoe2quiz-v29.3";
 const ARQUIVOS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png", "./favicon-32.png", "./jszip.min.js"];
 const EXTERNOS = ["fonts.googleapis.com", "fonts.gstatic.com", "cdnjs.cloudflare.com"];
 

@@ -6602,7 +6602,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   const grupoDe = (c) => (c.tipo === "e" ? "b109" : PRED_IDS.includes(c.pr) ? c.pr : "outras");
   const nomePredio = (id) => { const b = (window.GAME.predios || []).find((x) => x.id === id); return b ? b.nome : id; };
   const CHAVE = "aoe2quiz.forja.v1";
-  let dados = { cfg: { tipo: "", era: "", predio: "", qtd: 10, ordem: "aleatoria" }, itens: {}, sessoes: [] };
+  let dados = { cfg: { tipo: "", era: "", predio: "", qtd: 10, ordem: "aleatoria", soCusto: false }, itens: {}, itensC: {}, sessoes: [] };
   try { const x = JSON.parse(localStorage.getItem(CHAVE)); if (x && x.itens) dados = { ...dados, ...x, cfg: { ...dados.cfg, ...(x.cfg || {}) } }; } catch (e) {}
   const salvar = () => { try { localStorage.setItem(CHAVE, JSON.stringify(dados)); } catch (e) {} };
 
@@ -6643,11 +6643,13 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
         return [["", "Todos"], ...PREDIOS.map(([id, ic]) => [id, `${ic} ${esc(nomePredio(id))}`]), ["outras", "🧱 Outras construções"]]
           .filter(([v]) => !v || q(v) || cfg.predio === v)
           .map(([v, t]) => `<button class="chip ${cfg.predio === v ? "on" : ""}" data-fq-predio="${v}">${t}${v ? ` <small class="muted" style="display:inline">· ${q(v)}</small>` : ""}</button>`).join(""); })()}</div>
+      <h3>O que forjar</h3><p class="muted pequeno">No modo <b>só custo</b> você diz apenas quanto de cada recurso a carta custa (🍖 🪵 🪙 🪨), sem os atributos. Também dá para ligar esse modo nas Dicas para decorar.</p>
+      <div class="chips"><button class="chip ${!cfg.soCusto ? "on" : ""}" data-fq-socusto="0">🔨 Custo e atributos</button><button class="chip ${cfg.soCusto ? "on" : ""}" data-fq-socusto="1">💰 Só o custo</button></div>
       <h3>Ordem</h3><div class="chips">${chips(ORDENS, "ordem")}</div>
       <h3>Quantas cartas</h3><div class="chips">${QTDS.map(([v, t]) => `<button class="chip ${cfg.qtd === v ? "on" : ""}" data-fq-qtd="${v}">${t}</button>`).join("")}</div>
       <p class="muted pequeno">${n} carta${n === 1 ? "" : "s"} com esse filtro${cfg.qtd && cfg.qtd < n ? ` · você vai forjar ${cfg.qtd}` : ""}.</p>
       <button class="btn primario grande" id="fq-comecar" ${n ? "" : "disabled"}>🔨 Começar</button>
-      <p class="muted pequeno">${fortes} de ${todas().length} cartas já forjadas sem erro.${ult ? ` Última rodada: ${ult.a} de ${ult.n} (${Math.round((ult.a / ult.n) * 100)}%).` : ""}</p>`;
+      <p class="muted pequeno">${fortes} de ${todas().length} cartas já forjadas sem erro · ${Object.values(dados.itensC || {}).filter(dominada).length} com o custo na ponta da língua.${ult ? ` Última rodada: ${ult.a} de ${ult.n} (${Math.round((ult.a / ult.n) * 100)}%).` : ""}</p>`;
   }
   $("#tela-fq-config").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
@@ -6657,6 +6659,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     else if (b.dataset.fqPredio !== undefined) cfg.predio = b.dataset.fqPredio;
     else if (b.dataset.fqOrdem !== undefined) cfg.ordem = b.dataset.fqOrdem;
     else if (b.dataset.fqQtd !== undefined) cfg.qtd = Number(b.dataset.fqQtd);
+    else if (b.dataset.fqSocusto !== undefined) cfg.soCusto = b.dataset.fqSocusto === "1";
     else if (b.id === "fq-comecar") return comecar();
     else return;
     salvar(); renderConfig();
@@ -6664,15 +6667,16 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
 
   // ---------- rodada ----------
   let S = null; // { baralho, i, v, sel, res, cola, acertos, erradas: [], colas }
-  function comecar(so, origem) {
+  function comecar(so, origem, soCusto) {
     const baralho = montarBaralho(dados.cfg, so);
     if (!baralho.length) return;
-    S = { baralho, i: 0, acertos: 0, colas: 0, erradas: [], origem: origem || (S && so ? S.origem : null) };
+    if (soCusto === undefined) soCusto = so ? false : !!dados.cfg.soCusto;
+    S = { baralho, i: 0, acertos: 0, colas: 0, erradas: [], soCusto: !!soCusto, origem: origem || (S && so ? S.origem : null) };
     novaCarta();
     A.ir("fq");
   }
-  function camposDe(d) { return [...["c", "m", "o", "p"].map((r) => ({ id: r, rot: `${IC[r]} ${NOME_RES[r]}` })), ...D.atributosCarta(d).map((a) => ({ id: a.id, rot: a.rot }))]; }
-  function novaCarta() { const x = S.baralho[S.i]; S.v = {}; S.sel = "c"; S.res = null; S.cola = false; S.campos = camposDe(x.d); S.primeira = true; }
+  function camposDe(d, soCusto) { return [...["c", "m", "o", "p"].map((r) => ({ id: r, rot: `${IC[r]} ${NOME_RES[r]}` })), ...(soCusto ? [] : D.atributosCarta(d).map((a) => ({ id: a.id, rot: a.rot })))]; }
+  function novaCarta() { const x = S.baralho[S.i]; S.v = {}; S.sel = "c"; S.res = null; S.cola = false; S.campos = camposDe(x.d, S.soCusto); S.primeira = true; }
   const valor = (v) => (v === undefined || v === "" || v === "-" ? 0 : Number(v));
   function teclado(campos, sel, valores, marca) {
     return `<div class="du-campos n${campos.length}">${campos.map((c) => `<button class="du-campo-v ${sel === c.id ? "on" : ""} ${marca[c.id] || ""}" data-campo="${c.id}"><small>${c.rot}</small><b>${valores[c.id] === undefined || valores[c.id] === "" ? `<span class="du-vazio">0</span>` : esc(String(valores[c.id]))}</b></button>`).join("")}</div>`;
@@ -6680,7 +6684,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   function render() {
     if (!S) return A.ir("fq-config");
     const x = S.baralho[S.i], d = x.d, g = D.gabarito(d), res = S.res;
-    const topo = `<div class="fq-topo"><span>Carta <b>${S.i + 1}</b> de ${S.baralho.length}</span><span>✅ ${S.acertos}${S.colas ? ` · 💡 ${S.colas}` : ""} · ❌ ${S.erradas.length - S.colas}</span></div>
+    const topo = `<div class="fq-topo"><span>Carta <b>${S.i + 1}</b> de ${S.baralho.length}${S.soCusto ? " · 💰 só custo" : ""}</span><span>✅ ${S.acertos}${S.colas ? ` · 💡 ${S.colas}` : ""} · ❌ ${S.erradas.length - S.colas}</span></div>
       <div class="fq-barra"><i style="width:${(S.i / S.baralho.length) * 100}%"></i></div>`;
     let h;
     if (!res) {
@@ -6713,11 +6717,13 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   }
   function forjar(cola) {
     const x = S.baralho[S.i], g = D.gabarito(x.d), k = chaveDe(x);
-    const it = (dados.itens[k] = dados.itens[k] || { a: 0, e: 0, c: 0 });
+    // modo só custo guarda o progresso à parte: não marca a carta inteira como forjada
+    const loja = S.soCusto ? (dados.itensC = dados.itensC || {}) : dados.itens;
+    const it = (loja[k] = loja[k] || { a: 0, e: 0, c: 0 });
     let errados = [];
     if (cola) { it.c++; it.u = 0; S.colas++; S.erradas.push(k); S.v = { ...g }; }
     else {
-      errados = Object.keys(g).filter((f) => Math.round(valor(S.v[f])) !== Math.round(g[f]));
+      errados = S.campos.map((f) => f.id).filter((f) => Math.round(valor(S.v[f])) !== Math.round(g[f]));
       if (errados.length) { it.e++; it.u = 0; S.erradas.push(k); } else { it.a++; it.u = 1; S.acertos++; }
     }
     it.d = Date.now();
@@ -6726,7 +6732,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   }
   function proxima() {
     if (S.i < S.baralho.length - 1) { S.i++; novaCarta(); return render(); }
-    dados.sessoes.push({ n: S.baralho.length, a: S.acertos, data: Date.now() });
+    dados.sessoes.push({ n: S.baralho.length, a: S.acertos, data: Date.now(), ...(S.soCusto ? { custo: 1 } : {}) });
     dados.sessoes = dados.sessoes.slice(-50); salvar();
     A.ir("fq-fim");
   }
@@ -6768,7 +6774,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     const unicas = [...new Set(S.erradas)];
     const porK = Object.fromEntries(S.baralho.map((x) => [chaveDe(x), x]));
     $("#tela-fq-fim").innerHTML = `
-      <div class="fq-placar"><b>${S.acertos}</b> de ${n} forjadas sem erro <span class="muted">(${pct}%)</span>${S.colas ? `<br><small class="muted">💡 ${S.colas} com cola</small>` : ""}</div>
+      <div class="fq-placar"><b>${S.acertos}</b> de ${n} ${S.soCusto ? "custos certos" : "forjadas sem erro"} <span class="muted">(${pct}%)</span>${S.colas ? `<br><small class="muted">💡 ${S.colas} com cola</small>` : ""}</div>
       ${unicas.length ? `<h3>Para treinar de novo (${unicas.length})</h3><div class="fq-erradas">${unicas.map((k) => { const x = porK[k]; return `<div class="fq-errada">${C.mini(x.col.tipo, x.col.id, { nome: x.col.nome, chave: "fe" + k })}</div>`; }).join("")}</div>
         <button class="btn primario grande" id="fq-treinar">🔁 Treinar só as erradas</button>` : `<p class="ok-txt">Nenhum erro. Tente outra era ou "Todas".</p>`}
       ${S.origem === "dicas" ? `<button class="btn grande" data-ir="dicas">💡 Voltar às dicas</button>` : ""}
@@ -6778,7 +6784,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   }
   $("#tela-fq-fim").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
-    if (b.id === "fq-treinar") return comecar(S.ultimasErradas);
+    if (b.id === "fq-treinar") return comecar(S.ultimasErradas, undefined, S.soCusto);
     if (b.id === "fq-denovo") return A.ir("fq-config");
   });
 
@@ -6786,6 +6792,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   window.FORJA = {
     todas, chaveDe, comecar,
     item: (k) => dados.itens[k],
+    itemCusto: (k) => (dados.itensC || {})[k],
     registrar: (k, ok) => { const it = (dados.itens[k] = dados.itens[k] || { a: 0, e: 0, c: 0 }); if (ok) it.a++; else it.e++; it.u = ok ? 1 : 0; it.d = Date.now(); salvar(); },
     dominada,
     resumo: () => ({ total: todas().length, itens: dados.itens, sessoes: dados.sessoes, dominadas: todas().filter((x) => dominada(dados.itens[chaveDe(x)])).length }),
@@ -6805,7 +6812,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   const $ = (s) => document.querySelector(s);
   const IC = { c: "🍖", m: "🪵", o: "🪙", p: "🪨" }, RES = ["c", "m", "o", "p"];
   const CHAVE = "aoe2quiz.dicas.v1";
-  let st = { ocultar: false, aba: "tropas", padrao: [], completar: [] };
+  let st = { ocultar: false, soCusto: false, aba: "tropas", padrao: [], completar: [] };
   try { const x = JSON.parse(localStorage.getItem(CHAVE)); if (x) st = { ...st, ...x }; } catch (e) {}
   const salvar = () => { try { localStorage.setItem(CHAVE, JSON.stringify(st)); } catch (e) {} };
 
@@ -6927,6 +6934,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
       <div class="chips dc-abas">${ABAS.map((a) => { const gs = a.grupos.filter((g) => !g.x), d = gs.filter((g) => progressoGrupo(g).ic === "⭐").length; return `<button class="chip ${a.id === aba.id ? "on" : ""}" data-dc-aba="${a.id}">${a.nome} <small class="muted" style="display:inline">${d}/${gs.length}</small></button>`; }).join("")}</div>
       <div class="dc-topo">
         <button class="btn" id="dc-ocultar">${st.ocultar ? "👁 Mostrar números" : "🙈 Esconder números"}</button>
+        <button class="btn ${st.soCusto ? "primario" : ""}" id="dc-socusto" aria-pressed="${st.soCusto}" title="Quando ligado, o Treinar forja só o custo em recursos">💰 Só custo: ${st.soCusto ? "ligado" : "desligado"}</button>
         <button class="btn primario" data-ir="dicas-padrao">🧩 Achar o padrão</button>
       </div>
       <p class="muted pequeno">${esc(aba.intro)} ${st.ocultar ? "Toque num <b>?</b> para conferir." : ""} ${dom} de ${tot.length} grupos dominados no total.</p>
@@ -6951,7 +6959,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
       <div class="dc-acoes">
         ${emComp ? `<button class="btn" data-dc-comp-sair="1">Fechar</button>` : g.ks.length > 1 ? `<button class="btn" data-dc-comp="${esc(g.id)}">✍️ Completar</button>` : ""}
         ${st.ocultar && !emComp ? `<button class="btn" data-dc-revtudo="${esc(g.id)}">👁 Revelar</button>` : ""}
-        <button class="btn primario" data-dc-treinar="${esc(g.id)}">🔨 Treinar</button>
+        <button class="btn primario" data-dc-treinar="${esc(g.id)}">🔨 Treinar${st.soCusto ? " 💰" : ""}</button>
       </div>
     </section>`;
   }
@@ -7015,13 +7023,14 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     const b = e.target.closest("button"); if (!b) return;
     const d = b.dataset;
     if (d.dcAba) { st.aba = d.dcAba; comp = null; salvar(); render(); return window.scrollTo(0, 0); }
+    if (b.id === "dc-socusto") { st.soCusto = !st.soCusto; salvar(); return render(); }
     if (b.id === "dc-ocultar") { st.ocultar = !st.ocultar; revelados = new Set(); salvar(); return render(); }
     if (d.dcRev) { if (!st.ocultar) return; revelados.has(d.dcRev) ? revelados.delete(d.dcRev) : revelados.add(d.dcRev); b.outerHTML = pilulaHtml(d.dcRev.split("|")[0], pilulas(d.dcRev.split("|")[0]).find((p) => p.id === d.dcRev.split("|")[1])); return; }
     if (d.dcRevtudo) { GRUPO[d.dcRevtudo].ks.forEach((k) => pilulas(k).forEach((p) => revelados.add(k + "|" + p.id))); return render(); }
     if (d.dcComp) return abrirCompletar(d.dcComp);
     if (d.dcCompSair) { const gid = comp.gid; comp = null; render(); const el = document.getElementById("dc-" + gid); if (el) el.scrollIntoView({ block: "start" }); return; }
     if (d.dcConferir) return conferir();
-    if (d.dcTreinar) return F.comecar(GRUPO[d.dcTreinar].ks, "dicas");
+    if (d.dcTreinar) return F.comecar(GRUPO[d.dcTreinar].ks, "dicas", !!st.soCusto);
     if (d.dcCarta) { const x = POR_K[d.dcCarta]; if (x && C.abrir) C.abrir(x.col.tipo, x.col.id); }
   });
 
