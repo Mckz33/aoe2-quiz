@@ -6676,7 +6676,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
     A.ir("fq");
   }
   function camposDe(d, soCusto) { return [...["c", "m", "o", "p"].map((r) => ({ id: r, rot: `${IC[r]} ${NOME_RES[r]}` })), ...(soCusto ? [] : D.atributosCarta(d).map((a) => ({ id: a.id, rot: a.rot })))]; }
-  function novaCarta() { const x = S.baralho[S.i]; S.v = {}; S.sel = "c"; S.res = null; S.cola = false; S.campos = camposDe(x.d, S.soCusto); S.primeira = true; }
+  function novaCarta() { const x = S.baralho[S.i]; S.v = Object.create(null); S.sel = "c"; S.res = null; S.cola = false; S.campos = camposDe(x.d, S.soCusto); S.primeira = true; }
   const valor = (v) => (v === undefined || v === "" || v === "-" ? 0 : Number(v));
   function teclado(campos, sel, valores, marca) {
     return `<div class="du-campos n${campos.length}">${campos.map((c) => `<button class="du-campo-v ${sel === c.id ? "on" : ""} ${marca[c.id] || ""}" data-campo="${c.id}"><small>${c.rot}</small><b>${valores[c.id] === undefined || valores[c.id] === "" ? `<span class="du-vazio">0</span>` : esc(String(valores[c.id]))}</b></button>`).join("")}</div>`;
@@ -6980,7 +6980,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
       const gk = gab(k), cs = camposComp(k);
       return `<div class="dc-comp-l"><b class="dc-comp-n">${esc(nome(k))}${comp.feito ? ` ${comp.ok[k] ? "✅" : "❌"}` : ""}</b><div class="dc-comp-cs">${cs.map((c) => {
         const v = (comp.v[k] || {})[c.id] ?? "", cls = comp.feito ? (iguala(v, gk[c.id] || 0) ? "certo" : "errado") : "";
-        return `<label class="dc-in ${cls}"><small>${c.rot}</small><input inputmode="numeric" autocomplete="off" data-dc-in="${esc(k)}|${c.id}" value="${esc(String(v))}" ${comp.feito ? "readonly" : ""}>${comp.feito && cls === "errado" ? `<em>${gk[c.id] || 0}</em>` : ""}</label>`;
+        return `<label class="dc-in ${cls}"><small>${c.rot}</small><input inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" name="c${comp.id}-${esc(k)}-${c.id}" data-dc-sess="${comp.id}" data-dc-in="${esc(k)}|${c.id}" value="${esc(String(v))}" ${comp.feito ? "readonly" : ""}>${comp.feito && cls === "errado" ? `<em>${gk[c.id] || 0}</em>` : ""}</label>`;
       }).join("")}</div></div>`;
     }).join("");
     return `<p class="muted pequeno">A primeira carta está à mostra. Complete as outras com o padrão (campo vazio = 0; armadura negativa pode ser digitada sem o sinal).</p>
@@ -6991,7 +6991,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   function linhaHtmlAberta(k) { return `<div class="dc-linha"><span class="dc-nome">${esc(nome(k))}</span><div class="dc-pils">${pilulas(k).map((p) => `<span class="dc-pil"><span>${p.ic}</span> ${esc(String(p.v))}</span>`).join("")}</div></div>`; }
   function abrirCompletar(gid) {
     const g = GRUPO[gid];
-    comp = { gid, v: {}, feito: false, ok: {}, acertos: 0, res: RES.filter((r) => g.ks.some((k) => gab(k)[r])) };
+    comp = { id: Date.now() + "-" + Math.random().toString(36).slice(2), gid, v: {}, feito: false, ok: {}, acertos: 0, res: RES.filter((r) => g.ks.some((k) => gab(k)[r])) };
     render();
     const el = document.getElementById("dc-" + gid); if (el) el.scrollIntoView({ block: "start" });
   }
@@ -7010,7 +7010,7 @@ window.GAME = {"fonte":"SiegeEngineers/aoe2techtree","versao":"2026-10-27 Implem
   }
 
   $("#tela-dicas").addEventListener("input", (e) => {
-    const i = e.target.closest("[data-dc-in]"); if (!i || !comp) return;
+    const i = e.target.closest("[data-dc-in]"); if (!i || !comp || i.dataset.dcSess !== comp.id) return;
     const [k, c] = i.dataset.dcIn.split("|"); (comp.v[k] = comp.v[k] || {})[c] = i.value;
   });
   $("#tela-dicas").addEventListener("keydown", (e) => {
